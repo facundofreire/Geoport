@@ -1,0 +1,7 @@
+Investigación de mercado: hay varias aplicaciones de geografía pero la gran mayoría de estas están hechas por razones educativas y son bastante monotonas al tener solo un minijuego principal y un diseño muy simple. La aplicación "Geography Quiz" es más similar a la que haremos nosotros al tener varios minijuegos y una forma de competir contra amigos, sólo que nosotros lo haremos através de puntaje en vez de "carrera". También, por su diseño, busca atraer más a la gente menor que a los adultos.
+
+
+Visión: Hacer un juego entretenido, para todas las edades, en el cual hay minijuegos de geografía y al finalizar, el usuario podrá comparar sus puntajes con el de sus amigos.
+
+
+Usuario típico: Buscamos una base de jugadores similar a la de la aplicación "Preguntados", variando de todas las edades gracias a un diseño sencillo pero atractivo.
