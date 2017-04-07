@@ -1,0 +1,16 @@
+-Diseñar pantalla de inicio
+-Programar pantalla de inicio
+-Diseñar juego banderas
+-Programar juego banderas
+-Logueo con Facebook
+-Logueo con Google
+-Programar ranking
+-Diseñar ranking
+-Programar juego de ubicacion
+-Diseñar juego de ubicacion
+-Programar juego de forma del pais
+-Diseñar juego de forma del pais
+-Programar pantalla de opciones
+-Programar pantalla de opciones
+-Programar compartir puntuacion
+-Diseñar compartir puntuacion
