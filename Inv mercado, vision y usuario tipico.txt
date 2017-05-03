@@ -1,7 +1,9 @@
-InvestigaciÛn de mercado: hay varias aplicaciones de geografÌa pero la gran mayorÌa de estas est·n hechas por razones educativas y son bastante monotonas al tener solo un minijuego principal y un diseÒo muy simple. La aplicaciÛn "Geography Quiz" es m·s similar a la que haremos nosotros al tener varios minijuegos y una forma de competir contra amigos, sÛlo que nosotros lo haremos atravÈs de puntaje en vez de "carrera". TambiÈn, por su diseÒo, busca atraer m·s a la gente menor que a los adultos.
+Investigaci√≥n de mercado: hay varias aplicaciones de geograf√≠a pero la gran mayor√≠a de estas est√°n hechas por razones educativas y son bastante monotonas al tener solo un minijuego principal y un dise√±o muy simple. Al investigar en Play Store solo nos encontramos una aplicacion del mismo estilo a la cual nosotros proyectamos hacer. Esta, la consideramos no muy bien dise√±ada y muy basica, y cuenta con un millon de descargas.
+
+Mision: La aplicaci√≥n "Geography Quiz" es m√°s similar a la que haremos nosotros al tener varios minijuegos y una forma de competir contra amigos, s√≥lo que nosotros lo haremos atrav√©s de puntaje en vez de "carrera". Tambi√©n, por su dise√±o, busca atraer m√°s a la gente menor que a los adultos.
 
 
-VisiÛn: Hacer un juego entretenido, para todas las edades, en el cual hay minijuegos de geografÌa y al finalizar, el usuario podr· comparar sus puntajes con el de sus amigos.
+Visi√≥n: Hacer un juego entretenido, para todas las edades, en el cual hay minijuegos de geograf√≠a y al finalizar, el usuario podr√° comparar sus puntajes con el de sus amigos.
 
 
-Usuario tÌpico: Buscamos una base de jugadores similar a la de la aplicaciÛn "Preguntados", variando de todas las edades gracias a un diseÒo sencillo pero atractivo.
+Usuario t√≠pico: Buscamos una base de jugadores similar a la de la aplicaci√≥n "Preguntados", variando de todas las edades gracias a un dise√±o sencillo pero atractivo.
