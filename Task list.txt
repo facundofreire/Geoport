@@ -1,16 +1,22 @@
--Diseñar pantalla de inicio
--Programar pantalla de inicio
 -Diseñar juego banderas
+-Descargar banderas
+-Calcular ratio ancho-alto promedio de banderas
 -Programar juego banderas
 -Logueo con Facebook
--Logueo con Google
+-Crear backend para las puntuaciones y logueos
 -Programar ranking
 -Diseñar ranking
+-Diseñar pantalla de inicio
+-Programar pantalla de inicio
+-Conseguir mapa
 -Programar juego de ubicacion
 -Diseñar juego de ubicacion
+-Conseguir formas de paises
 -Programar juego de forma del pais
 -Diseñar juego de forma del pais
--Programar pantalla de opciones
--Programar pantalla de opciones
--Programar compartir puntuacion
+-Añadir sonidos
+-Añadir música
+-Programar boton mute
+-Programar boton de pausa/salir
+-Programar compartir rango
 -Diseñar compartir puntuacion

@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">Geoport</string>
+    <string-array name="paises_array">
+        <item>afghanistan</item>
+        <item>albania</item>
+        <item>algeria</item>
+        <item>andorra</item>
+        <item>argentina</item>
+        <item>armenia</item>
+        <item>australia</item>
+        <item>austria</item>
+        <item>belgium</item>
+        <item>bolivia</item>
+        <item>bosnia</item>
+        <item>botswana</item>
+        <item>brazil</item>
+        <item>bulgaria</item>
+    </string-array>
+</resources>
