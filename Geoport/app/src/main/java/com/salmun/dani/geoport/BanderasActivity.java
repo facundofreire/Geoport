@@ -1,23 +1,15 @@
 package com.salmun.dani.geoport;
 
 import android.content.res.Resources;
-import android.os.Build;
-import android.support.annotation.NonNull;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.TypedValue;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-import java.util.ListIterator;
 import java.util.Random;
 
 public class BanderasActivity extends AppCompatActivity {
@@ -31,7 +23,7 @@ public class BanderasActivity extends AppCompatActivity {
     ImageButton imbBandera4;
     int idCorrecto;
     int puntaje = 0;
-    List lstRepetidoGlobal = new ArrayList();
+    ArrayList<String> lstRepetidoGlobal = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +40,9 @@ public class BanderasActivity extends AppCompatActivity {
         });
     }
 
+    //ELIMINAR CODIGO TEMPORAL (BTNREINICIAR EN ONCREATE, CONT EN ELEGIRPAIS)
+    //CAMBIAR SISTEMA DE PUNTAJE, AGREGAR COMBO TIEMPO Y FUNCION PARA PROXACTIVITY
+
     private void obtenerReferenciasYSetearListeners(){
         imbBandera1 = (ImageButton) findViewById(R.id.imbBandera1);
         imbBandera2 = (ImageButton) findViewById(R.id.imbBandera2);
@@ -56,7 +51,9 @@ public class BanderasActivity extends AppCompatActivity {
         tvwPais = (TextView) findViewById(R.id.tvwPais);
         tvwCorrecto = (TextView) findViewById(R.id.tvwCorrecto);
         tvwPuntaje = (TextView) findViewById(R.id.tvwScore);
+
         vecPaises = getResources().getStringArray(R.array.paises_array);
+
         imbBandera1.setOnClickListener(clickImg);
         imbBandera2.setOnClickListener(clickImg);
         imbBandera3.setOnClickListener(clickImg);
@@ -72,7 +69,6 @@ public class BanderasActivity extends AppCompatActivity {
             }
             else {
                 tvwCorrecto.setText("Incorrecto");
-                puntaje--;
             }
             tvwPuntaje.setText(String.valueOf(puntaje));
             elegirPais();
@@ -81,7 +77,7 @@ public class BanderasActivity extends AppCompatActivity {
 
     private void elegirPais(){
         Random r = new Random();
-        List lstRepetido = new ArrayList();
+        ArrayList<String> lstRepetido = new ArrayList<>();
         int[] vecIdImb = new int[4];
         vecIdImb[0] = imbBandera1.getId();
         vecIdImb[1] = imbBandera2.getId();
@@ -89,21 +85,26 @@ public class BanderasActivity extends AppCompatActivity {
         vecIdImb[3] = imbBandera4.getId();
         String packageName = getPackageName();
         Resources resources = getResources();
-        int vecLenght = vecPaises.length;
+        int intVecLenght = vecPaises.length;
         int resID;
         for (int i = 4; i>0; i--) {
-            String strPais = vecPaises[r.nextInt(vecLenght)];
-            int cont = 0;
+            String strPais = vecPaises[r.nextInt(intVecLenght)];
             while (lstRepetido.contains(strPais) || lstRepetidoGlobal.contains(strPais)){
-                cont++;
-                strPais = vecPaises[r.nextInt(vecLenght)];
+                strPais = vecPaises[r.nextInt(intVecLenght)];
             }
-            if (cont >= 10){
+            if (lstRepetidoGlobal.size()>11){
                 imbBandera1.setEnabled(false);
                 imbBandera2.setEnabled(false);
                 imbBandera3.setEnabled(false);
                 imbBandera4.setEnabled(false);
-                //PUNTAJE
+                if (puntaje >= 10){
+                    tvwCorrecto.setText("Ganaste");
+                    tvwCorrecto.setTextSize(TypedValue.COMPLEX_UNIT_SP, 24);
+                }
+                else {
+                    tvwCorrecto.setText("Perdiste");
+                    tvwCorrecto.setTextSize(TypedValue.COMPLEX_UNIT_SP, 24);
+                }
             }
             lstRepetido.add(strPais);
             resID = resources.getIdentifier(strPais, "drawable", packageName);
