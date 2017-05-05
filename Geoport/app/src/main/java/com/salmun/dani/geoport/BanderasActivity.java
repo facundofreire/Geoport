@@ -1,6 +1,9 @@
 package com.salmun.dani.geoport;
 
 import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.TypedValue;
@@ -8,8 +11,15 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Random;
 
 public class BanderasActivity extends AppCompatActivity {
@@ -17,13 +27,10 @@ public class BanderasActivity extends AppCompatActivity {
     TextView tvwPais;
     TextView tvwCorrecto;
     TextView tvwPuntaje;
-    ImageButton imbBandera1;
-    ImageButton imbBandera2;
-    ImageButton imbBandera3;
-    ImageButton imbBandera4;
     int idCorrecto;
     int puntaje = 0;
-    ArrayList<String> lstRepetidoGlobal = new ArrayList<>();
+    int contCombo = 0;
+    ArrayList<Integer> lstIdImb = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +38,7 @@ public class BanderasActivity extends AppCompatActivity {
         setContentView(R.layout.activity_banderas);
         obtenerReferenciasYSetearListeners();
         elegirPais();
+        //Codigo temporal
         Button btnReiniciar = (Button) findViewById(R.id.btnReiniciar);
         btnReiniciar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -38,21 +46,27 @@ public class BanderasActivity extends AppCompatActivity {
                 recreate();
             }
         });
+        //Codigo temporal
     }
 
     //ELIMINAR CODIGO TEMPORAL (BTNREINICIAR EN ONCREATE, CONT EN ELEGIRPAIS)
-    //CAMBIAR SISTEMA DE PUNTAJE, AGREGAR COMBO TIEMPO Y FUNCION PARA PROXACTIVITY
+    //SUBIR DIFICULTAD CUANDO SUBE COMBO
+    //CAMBIAR SISTEMA DE PUNTAJE, AGREGAR COMBO, TIEMPO Y FUNCION PARA PROXACTIVITY
 
     private void obtenerReferenciasYSetearListeners(){
-        imbBandera1 = (ImageButton) findViewById(R.id.imbBandera1);
-        imbBandera2 = (ImageButton) findViewById(R.id.imbBandera2);
-        imbBandera3 = (ImageButton) findViewById(R.id.imbBandera3);
-        imbBandera4 = (ImageButton) findViewById(R.id.imbBandera4);
+        ImageButton imbBandera1 = (ImageButton) findViewById(R.id.imbBandera1);
+        ImageButton imbBandera2 = (ImageButton) findViewById(R.id.imbBandera2);
+        ImageButton imbBandera3 = (ImageButton) findViewById(R.id.imbBandera3);
+        ImageButton imbBandera4 = (ImageButton) findViewById(R.id.imbBandera4);
         tvwPais = (TextView) findViewById(R.id.tvwPais);
         tvwCorrecto = (TextView) findViewById(R.id.tvwCorrecto);
         tvwPuntaje = (TextView) findViewById(R.id.tvwScore);
 
         vecPaises = getResources().getStringArray(R.array.paises_array);
+        lstIdImb.add(imbBandera1.getId());
+        lstIdImb.add(imbBandera2.getId());
+        lstIdImb.add(imbBandera3.getId());
+        lstIdImb.add(imbBandera4.getId());
 
         imbBandera1.setOnClickListener(clickImg);
         imbBandera2.setOnClickListener(clickImg);
@@ -65,10 +79,12 @@ public class BanderasActivity extends AppCompatActivity {
         public void onClick(View view) {
             if (view.getId() == idCorrecto){
                 tvwCorrecto.setText("Correcto");
-                puntaje++;
+                contCombo++;
+                puntaje += contCombo / 2 + 1;
             }
             else {
                 tvwCorrecto.setText("Incorrecto");
+                contCombo = 0;
             }
             tvwPuntaje.setText(String.valueOf(puntaje));
             elegirPais();
@@ -78,48 +94,36 @@ public class BanderasActivity extends AppCompatActivity {
     private void elegirPais(){
         Random r = new Random();
         ArrayList<String> lstRepetido = new ArrayList<>();
-        int[] vecIdImb = new int[4];
-        vecIdImb[0] = imbBandera1.getId();
-        vecIdImb[1] = imbBandera2.getId();
-        vecIdImb[2] = imbBandera3.getId();
-        vecIdImb[3] = imbBandera4.getId();
-        String packageName = getPackageName();
-        Resources resources = getResources();
         int intVecLenght = vecPaises.length;
-        int resID;
-        for (int i = 4; i>0; i--) {
+        Collections.shuffle(lstIdImb);
+        String error = "";
+        for (int i = 0; i<4; i++) {
             String strPais = vecPaises[r.nextInt(intVecLenght)];
-            while (lstRepetido.contains(strPais) || lstRepetidoGlobal.contains(strPais)){
+            while (lstRepetido.contains(strPais)){
                 strPais = vecPaises[r.nextInt(intVecLenght)];
             }
-            if (lstRepetidoGlobal.size()>11){
-                imbBandera1.setEnabled(false);
-                imbBandera2.setEnabled(false);
-                imbBandera3.setEnabled(false);
-                imbBandera4.setEnabled(false);
-                if (puntaje >= 10){
-                    tvwCorrecto.setText("Ganaste");
-                    tvwCorrecto.setTextSize(TypedValue.COMPLEX_UNIT_SP, 24);
-                }
-                else {
-                    tvwCorrecto.setText("Perdiste");
-                    tvwCorrecto.setTextSize(TypedValue.COMPLEX_UNIT_SP, 24);
-                }
-            }
             lstRepetido.add(strPais);
-            resID = resources.getIdentifier(strPais, "drawable", packageName);
-            int intRandom = r.nextInt(4);
-            while (vecIdImb[intRandom] == 0){
-                intRandom = r.nextInt(4);
-            }
-            ImageButton imbTemp = (ImageButton) findViewById(vecIdImb[intRandom]);
-            vecIdImb[intRandom] = 0;
-            imbTemp.setImageResource(resID);
-            if (i == 4){
+
+            ImageButton imbTemp = (ImageButton) findViewById(lstIdImb.get(i));
+            imbTemp.setImageDrawable(traerImagen(strPais));
+            error += "  " + strPais;
+            if (i == 0){
                 idCorrecto = imbTemp.getId();
+                strPais = strPais.substring(0, 1).toUpperCase() + strPais.substring(1);
                 tvwPais.setText(strPais);
-                lstRepetidoGlobal.add(strPais);
             }
+        }
+        tvwCorrecto.setText(error);
+    }
+
+    private Drawable traerImagen(String strPais){
+        try {
+            InputStream stream = getAssets().open("flags/" + strPais.replace(' ', '_') + ".png");
+            Drawable imagen = Drawable.createFromStream(stream, null);
+            return imagen;
+        }
+        catch(IOException ex) {
+            return null;
         }
     }
 }
