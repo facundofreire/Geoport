@@ -24,12 +24,16 @@ import java.util.Random;
 
 public class BanderasActivity extends AppCompatActivity {
     String[] vecPaises;
+    String[] vecPaisesFaciles;
+    String[] vecPaisesMedios;
+    String[] vecPaisesDificiles;
     TextView tvwPais;
     TextView tvwCorrecto;
     TextView tvwPuntaje;
     int idCorrecto;
     int puntaje = 0;
     int contCombo = 0;
+    String strUltimoPais = "";
     ArrayList<Integer> lstIdImb = new ArrayList<>();
 
     @Override
@@ -63,6 +67,10 @@ public class BanderasActivity extends AppCompatActivity {
         tvwPuntaje = (TextView) findViewById(R.id.tvwScore);
 
         vecPaises = getResources().getStringArray(R.array.paises_array);
+        vecPaisesFaciles = getResources().getStringArray(R.array.paises_array_facil);
+        vecPaisesMedios = getResources().getStringArray(R.array.paises_array_media);
+        vecPaisesDificiles = getResources().getStringArray(R.array.paises_array_dificil);
+
         lstIdImb.add(imbBandera1.getId());
         lstIdImb.add(imbBandera2.getId());
         lstIdImb.add(imbBandera3.getId());
@@ -86,7 +94,8 @@ public class BanderasActivity extends AppCompatActivity {
                 tvwCorrecto.setText("Incorrecto");
                 contCombo = 0;
             }
-            tvwPuntaje.setText(String.valueOf(puntaje));
+            String mostrarPuntajeYCombo = "x" + String.valueOf(contCombo) + "\n" + String.valueOf(puntaje);
+            tvwPuntaje.setText(mostrarPuntajeYCombo);
             elegirPais();
         }
     };
@@ -95,23 +104,39 @@ public class BanderasActivity extends AppCompatActivity {
         Random r = new Random();
         ArrayList<String> lstRepetido = new ArrayList<>();
         int intVecLenght = vecPaises.length;
+
         Collections.shuffle(lstIdImb);
-        String error = "";
-        for (int i = 0; i<4; i++) {
-            String strPais = vecPaises[r.nextInt(intVecLenght)];
+
+        String strPais = "";
+        ImageButton imbTemp = (ImageButton) findViewById(lstIdImb.get(0));
+        do {
+            if (contCombo < 6) {
+                strPais = vecPaisesFaciles[r.nextInt(vecPaisesFaciles.length)];
+            }
+            if (contCombo >= 6 && contCombo < 14) {
+                strPais = vecPaisesMedios[r.nextInt(vecPaisesMedios.length)];
+            }
+            if (contCombo >= 14) {
+                strPais = vecPaisesDificiles[r.nextInt(vecPaisesDificiles.length)];
+            }
+        } while (strPais.equals(strUltimoPais));
+        strUltimoPais = strPais;
+        imbTemp.setImageDrawable(traerImagen(strPais));
+        lstRepetido.add(strPais);
+        idCorrecto = imbTemp.getId();
+        strPais = strPais.substring(0, 1).toUpperCase() + strPais.substring(1);
+        tvwPais.setText(strPais);
+        String error = strPais;
+        for (int i = 1; i<4; i++) {
+            strPais = vecPaises[r.nextInt(intVecLenght)];
             while (lstRepetido.contains(strPais)){
                 strPais = vecPaises[r.nextInt(intVecLenght)];
             }
             lstRepetido.add(strPais);
 
-            ImageButton imbTemp = (ImageButton) findViewById(lstIdImb.get(i));
+            imbTemp = (ImageButton) findViewById(lstIdImb.get(i));
             imbTemp.setImageDrawable(traerImagen(strPais));
             error += "  " + strPais;
-            if (i == 0){
-                idCorrecto = imbTemp.getId();
-                strPais = strPais.substring(0, 1).toUpperCase() + strPais.substring(1);
-                tvwPais.setText(strPais);
-            }
         }
         tvwCorrecto.setText(error);
     }
@@ -119,8 +144,7 @@ public class BanderasActivity extends AppCompatActivity {
     private Drawable traerImagen(String strPais){
         try {
             InputStream stream = getAssets().open("flags/" + strPais.replace(' ', '_') + ".png");
-            Drawable imagen = Drawable.createFromStream(stream, null);
-            return imagen;
+            return Drawable.createFromStream(stream, null);
         }
         catch(IOException ex) {
             return null;
