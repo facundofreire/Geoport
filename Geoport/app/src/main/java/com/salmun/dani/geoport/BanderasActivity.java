@@ -126,7 +126,6 @@ public class BanderasActivity extends AppCompatActivity {
         idCorrecto = imbTemp.getId();
         strPais = strPais.substring(0, 1).toUpperCase() + strPais.substring(1);
         tvwPais.setText(strPais);
-        String error = strPais;
         for (int i = 1; i<4; i++) {
             strPais = vecPaises[r.nextInt(intVecLenght)];
             while (lstRepetido.contains(strPais)){
@@ -136,9 +135,7 @@ public class BanderasActivity extends AppCompatActivity {
 
             imbTemp = (ImageButton) findViewById(lstIdImb.get(i));
             imbTemp.setImageDrawable(traerImagen(strPais));
-            error += "  " + strPais;
         }
-        tvwCorrecto.setText(error);
     }
 
     private Drawable traerImagen(String strPais){

@@ -7,6 +7,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="@color/colorFondo"
     tools:context="com.salmun.dani.geoport.BanderasActivity">
 
     <TextView
@@ -14,66 +15,73 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Large Text"
+        android:textColor="@color/colorTexto"
         android:id="@+id/tvwPais"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="40dp" />
 
     <ImageButton
-        android:layout_width="225px"
-        android:layout_height="150px"
+        android:layout_width="112dp"
+        android:layout_height="75dp"
         android:id="@+id/imbBandera1"
         android:layout_marginTop="43dp"
-        android:adjustViewBounds = "true"
         android:scaleType="centerCrop"
+        android:adjustViewBounds="true"
         android:layout_below="@+id/tvwPais"
         android:layout_alignParentStart="true"
-        android:layout_marginStart="25dp" />
+        android:layout_marginStart="25dp"
+        android:background="@null" />
 
     <ImageButton
-        android:layout_width="225px"
-        android:layout_height="150px"
+        android:layout_width="112dp"
+        android:layout_height="75dp"
         android:id="@+id/imbBandera2"
         android:layout_alignBottom="@+id/imbBandera1"
         android:layout_alignParentEnd="true"
         android:layout_marginEnd="43dp"
-        android:adjustViewBounds = "true"
-        android:scaleType="centerCrop"/>
+        android:scaleType="centerCrop"
+        android:adjustViewBounds="true"
+        android:background="@null" />
 
     <ImageButton
-        android:layout_width="225px"
-        android:layout_height="150px"
+        android:layout_width="112dp"
+        android:layout_height="75dp"
         android:id="@+id/imbBandera3"
         android:layout_marginTop="83dp"
         android:layout_below="@+id/imbBandera1"
         android:layout_alignStart="@+id/imbBandera1"
-        android:adjustViewBounds = "true"
-        android:scaleType="centerCrop"/>
+        android:scaleType="centerCrop"
+        android:adjustViewBounds="true"
+        android:background="@null" />
 
     <ImageButton
-        android:layout_width="225px"
-        android:layout_height="150px"
+        android:layout_width="112dp"
+        android:layout_height="75dp"
         android:id="@+id/imbBandera4"
-        android:adjustViewBounds = "true"
         android:scaleType="centerCrop"
+        android:adjustViewBounds="true"
         android:layout_alignTop="@+id/imbBandera3"
-        android:layout_alignStart="@+id/imbBandera2" />
+        android:layout_alignStart="@+id/imbBandera2"
+        android:background="@null" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="Small Text"
+        android:textColor="@color/colorTexto"
         android:id="@+id/tvwCorrecto"
+        android:layout_marginTop="62dp"
         android:layout_below="@+id/imbBandera3"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="50dp" />
+        android:layout_centerHorizontal="true" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Medium Text"
+        android:textColor="@color/colorTexto"
         android:id="@+id/tvwScore"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true" />
@@ -83,6 +91,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Medium Text"
+        android:textColor="@color/colorTexto"
         android:id="@+id/tvwTimer"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true" />
