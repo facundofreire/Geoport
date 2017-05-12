@@ -34,7 +34,6 @@
                 android:scaleType="fitCenter"
                 android:id="@+id/btnPlayGames"
                 android:layout_gravity="end"
-                android:src="@drawable/play_games"
                 android:adjustViewBounds="true"
                 android:contentDescription="Facebook"/>
         </LinearLayout>

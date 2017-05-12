@@ -1,0 +1,10 @@
+primer columna: backlog
+segunda columna: haciendo
+tercera: completo
+
+eliminar app vieja git
+
+usuario y puntaje der unir
+
+investigar firebase
+avanzar con el primer juego
