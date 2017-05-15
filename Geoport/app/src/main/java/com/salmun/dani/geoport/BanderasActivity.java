@@ -1,9 +1,13 @@
 package com.salmun.dani.geoport;
 
+import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.os.CountDownTimer;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.TypedValue;
@@ -30,11 +34,13 @@ public class BanderasActivity extends AppCompatActivity {
     TextView tvwPais;
     TextView tvwCorrecto;
     TextView tvwPuntaje;
+    TextView tvwTiempo;
     int idCorrecto;
     int puntaje = 0;
     int contCombo = 0;
-    String strUltimoPais = "";
+    ArrayList<String> lstUltimoPais = new ArrayList<>();
     ArrayList<Integer> lstIdImb = new ArrayList<>();
+    CountDownTimer cTimer = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,20 +48,8 @@ public class BanderasActivity extends AppCompatActivity {
         setContentView(R.layout.activity_banderas);
         obtenerReferenciasYSetearListeners();
         elegirPais();
-        //Codigo temporal
-        Button btnReiniciar = (Button) findViewById(R.id.btnReiniciar);
-        btnReiniciar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                recreate();
-            }
-        });
-        //Codigo temporal
+        empezarTimer();
     }
-
-    //ELIMINAR CODIGO TEMPORAL (BTNREINICIAR EN ONCREATE, CONT EN ELEGIRPAIS)
-    //SUBIR DIFICULTAD CUANDO SUBE COMBO
-    //CAMBIAR SISTEMA DE PUNTAJE, AGREGAR COMBO, TIEMPO Y FUNCION PARA PROXACTIVITY
 
     private void obtenerReferenciasYSetearListeners(){
         ImageButton imbBandera1 = (ImageButton) findViewById(R.id.imbBandera1);
@@ -65,12 +59,17 @@ public class BanderasActivity extends AppCompatActivity {
         tvwPais = (TextView) findViewById(R.id.tvwPais);
         tvwCorrecto = (TextView) findViewById(R.id.tvwCorrecto);
         tvwPuntaje = (TextView) findViewById(R.id.tvwScore);
+        tvwTiempo = (TextView) findViewById(R.id.tvwTimer);
 
         vecPaises = getResources().getStringArray(R.array.paises_array);
         vecPaisesFaciles = getResources().getStringArray(R.array.paises_array_facil);
         vecPaisesMedios = getResources().getStringArray(R.array.paises_array_media);
         vecPaisesDificiles = getResources().getStringArray(R.array.paises_array_dificil);
 
+        assert imbBandera1 != null;
+        assert imbBandera2 != null;
+        assert imbBandera3 != null;
+        assert imbBandera4 != null;
         lstIdImb.add(imbBandera1.getId());
         lstIdImb.add(imbBandera2.getId());
         lstIdImb.add(imbBandera3.getId());
@@ -93,12 +92,34 @@ public class BanderasActivity extends AppCompatActivity {
             else {
                 tvwCorrecto.setText("Incorrecto");
                 contCombo = 0;
+                lstUltimoPais.remove(lstUltimoPais.size() - 1);
             }
             String mostrarPuntajeYCombo = "x" + String.valueOf(contCombo) + "\n" + String.valueOf(puntaje);
             tvwPuntaje.setText(mostrarPuntajeYCombo);
             elegirPais();
         }
     };
+
+    private void empezarTimer(){
+        cTimer = new CountDownTimer(30000, 1000) {
+            public void onTick(long milisegundos) {
+                if (milisegundos < 10000){
+                    tvwTiempo.setText("0:0" + milisegundos / 1000);
+                    if (milisegundos < 5000){
+                        tvwTiempo.setTextColor(Color.parseColor("#be0000"));
+                    }
+                }
+                else{
+                    tvwTiempo.setText("0:" + milisegundos / 1000);
+                }
+            }
+
+            public void onFinish() {
+                nuevaActividad();
+            }
+        };
+        cTimer.start();
+    }
 
     private void elegirPais(){
         Random r = new Random();
@@ -109,6 +130,7 @@ public class BanderasActivity extends AppCompatActivity {
 
         String strPais = "";
         ImageButton imbTemp = (ImageButton) findViewById(lstIdImb.get(0));
+
         do {
             if (contCombo < 6) {
                 strPais = vecPaisesFaciles[r.nextInt(vecPaisesFaciles.length)];
@@ -119,8 +141,10 @@ public class BanderasActivity extends AppCompatActivity {
             if (contCombo >= 14) {
                 strPais = vecPaisesDificiles[r.nextInt(vecPaisesDificiles.length)];
             }
-        } while (strPais.equals(strUltimoPais));
-        strUltimoPais = strPais;
+        } while (lstUltimoPais.contains(strPais));
+        lstUltimoPais.add(strPais);
+
+        assert imbTemp != null;
         imbTemp.setImageDrawable(traerImagen(strPais));
         lstRepetido.add(strPais);
         idCorrecto = imbTemp.getId();
@@ -132,8 +156,8 @@ public class BanderasActivity extends AppCompatActivity {
                 strPais = vecPaises[r.nextInt(intVecLenght)];
             }
             lstRepetido.add(strPais);
-
             imbTemp = (ImageButton) findViewById(lstIdImb.get(i));
+            assert imbTemp != null;
             imbTemp.setImageDrawable(traerImagen(strPais));
         }
     }
@@ -146,5 +170,27 @@ public class BanderasActivity extends AppCompatActivity {
         catch(IOException ex) {
             return null;
         }
+    }
+
+    private void nuevaActividad(){
+        cTimer.cancel();
+        tvwTiempo.setText("0:00");
+        tvwPais.setText("¡Fin!");
+        for (Integer idImb:lstIdImb) {
+            ImageButton imbTemp = (ImageButton) findViewById(idImb);
+            assert imbTemp != null;
+            imbTemp.setEnabled(false);
+            imbTemp.setImageResource(R.drawable.logo_geoport);
+        }
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable(){
+            @Override
+            public void run(){
+                Intent intent = new Intent(getApplicationContext(), FormasActivity.class);
+                intent.putExtra("intPuntaje", puntaje);
+                startActivity(intent);
+                finish();
+            }
+        }, 5000);
     }
 }

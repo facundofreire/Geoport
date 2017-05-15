@@ -14,7 +14,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Large Text"
+        android:text=""
         android:textColor="@color/colorTexto"
         android:id="@+id/tvwPais"
         android:layout_alignParentTop="true"
@@ -69,7 +69,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="Small Text"
+        android:text=""
         android:textColor="@color/colorTexto"
         android:id="@+id/tvwCorrecto"
         android:layout_marginTop="62dp"
@@ -79,8 +79,8 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Medium Text"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text=""
         android:textColor="@color/colorTexto"
         android:id="@+id/tvwScore"
         android:layout_alignParentBottom="true"
@@ -89,29 +89,12 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Medium Text"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text=""
         android:textColor="@color/colorTexto"
         android:id="@+id/tvwTimer"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true" />
-
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/imgTimer"
-        android:layout_toEndOf="@+id/tvwPais"
-        android:layout_alignTop="@+id/tvwTimer" />
-
-    <Button
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="R"
-        android:id="@+id/btnReiniciar"
-        android:layout_alignParentTop="true"
-        android:layout_alignEnd="@+id/tvwTimer"
-        android:layout_toEndOf="@+id/imbBandera4" />
 
     <TextView
         android:id="@+id/textView2"

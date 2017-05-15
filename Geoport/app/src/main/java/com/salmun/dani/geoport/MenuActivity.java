@@ -28,7 +28,7 @@ public class MenuActivity extends AppCompatActivity {
     };
 
     private void Play() {
-        Intent intent = new Intent(this, BanderasActivity.class);
+        Intent intent = new Intent(getApplicationContext(), BanderasActivity.class);
         startActivity(intent);
         finish();
     }

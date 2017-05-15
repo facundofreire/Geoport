@@ -1,3 +1,11 @@
+12/05
+-firebase mostrar algo que esta guardado en firebase y subir algo
+-cartas github
+-segundo minijuego
+
+-------------------------------------------------------------------------
+
+05/05
 primer columna: backlog
 segunda columna: haciendo
 tercera: completo
