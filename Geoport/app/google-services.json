@@ -1,27 +1,27 @@
 {
   "project_info": {
-    "project_number": "644090569762",
-    "firebase_url": "https://test-14b47.firebaseio.com",
-    "project_id": "test-14b47",
-    "storage_bucket": "test-14b47.appspot.com"
+    "project_number": "795878399042",
+    "firebase_url": "https://geoport-443af.firebaseio.com",
+    "project_id": "geoport-443af",
+    "storage_bucket": "geoport-443af.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:644090569762:android:374a544d32a7ec5c",
+        "mobilesdk_app_id": "1:795878399042:android:07686587a25160ca",
         "android_client_info": {
-          "package_name": "com.geoport.freire_salmun.firebasetest"
+          "package_name": "com.salmun.dani.geoport"
         }
       },
       "oauth_client": [
         {
-          "client_id": "644090569762-1vraf26m48oobrv524o4fdu7vgb8hpq6.apps.googleusercontent.com",
+          "client_id": "795878399042-q5isa6tkusrqfrkh84ofd7ued0fh0603.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAu5yg7sf6aAcUwFafiRXukgd7AQCyAAV8"
+          "current_key": "AIzaSyDu01SUjJasfY7o7LXGpdxWE0IK7d6cRFk"
         }
       ],
       "services": {

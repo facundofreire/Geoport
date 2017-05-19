@@ -1,25 +1,17 @@
 package com.salmun.dani.geoport;
 
 import android.content.Intent;
-import android.content.res.Resources;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.CountDownTimer;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.TypedValue;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -91,6 +83,9 @@ public class BanderasActivity extends AppCompatActivity {
             }
             else {
                 tvwCorrecto.setText("Incorrecto");
+                if (contCombo == 0){
+                    puntaje -= 1;
+                }
                 contCombo = 0;
                 lstUltimoPais.remove(lstUltimoPais.size() - 1);
             }
@@ -174,7 +169,6 @@ public class BanderasActivity extends AppCompatActivity {
 
     private void nuevaActividad(){
         cTimer.cancel();
-        tvwTiempo.setText("0:00");
         tvwPais.setText("¡Fin!");
         for (Integer idImb:lstIdImb) {
             ImageButton imbTemp = (ImageButton) findViewById(idImb);
@@ -182,15 +176,21 @@ public class BanderasActivity extends AppCompatActivity {
             imbTemp.setEnabled(false);
             imbTemp.setImageResource(R.drawable.logo_geoport);
         }
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable(){
-            @Override
-            public void run(){
-                Intent intent = new Intent(getApplicationContext(), FormasActivity.class);
-                intent.putExtra("intPuntaje", puntaje);
-                startActivity(intent);
-                finish();
-            }
-        }, 5000);
+        tvwCorrecto.setText("");
+        tvwTiempo.setVisibility(View.INVISIBLE);
+        Button btnProxActividad = (Button) findViewById(R.id.btnProxActividad);
+        assert btnProxActividad != null;
+        btnProxActividad.setVisibility(View.VISIBLE);
+        btnProxActividad.setOnClickListener(clickProxActividad);
     }
+
+    private View.OnClickListener clickProxActividad = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            Intent intent = new Intent(getApplicationContext(), FormasActivity.class);
+            intent.putExtra("intPuntaje", puntaje);
+            startActivity(intent);
+            finish();
+        }
+    };
 }

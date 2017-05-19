@@ -68,7 +68,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textAppearance="?android:attr/textAppearanceLarge"
         android:text=""
         android:textColor="@color/colorTexto"
         android:id="@+id/tvwCorrecto"
@@ -102,5 +102,14 @@
         android:layout_height="wrap_content"
         android:layout_above="@+id/imbBandera1"
         android:layout_toStartOf="@+id/tvwPais" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Continue"
+        android:id="@+id/btnProxActividad"
+        android:layout_alignParentBottom="true"
+        android:layout_alignEnd="@+id/tvwTimer"
+        android:visibility="gone" />
 
 </RelativeLayout>
