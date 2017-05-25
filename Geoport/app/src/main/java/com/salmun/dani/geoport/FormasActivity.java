@@ -9,6 +9,12 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -36,12 +42,41 @@ public class FormasActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_formas);
-        puntaje = getIntent().getIntExtra("intPuntaje", 0);
-        String strPuntaje = "x0\n" + String.valueOf(puntaje);
+        reciboIntentOFirebase();
         obtenerReferenciasYSetearListeners();
-        tvwPuntaje.setText(strPuntaje);
         elegirPais();
     }
+
+    private void reciboIntentOFirebase(){
+        //CODIGO TEMPORAL
+        Bundle reciboIntent = getIntent().getExtras();
+        if (reciboIntent.getBoolean("puntajeEnFirebase")){
+            DatabaseReference dataBase = FirebaseDatabase.getInstance()
+                    .getReference("/Usuario/puntaje");
+            dataBase.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    guardarPuntaje(dataSnapshot.getValue(Integer.class));
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    guardarPuntaje(getIntent().getExtras().getInt("intPuntaje"));
+                }
+            });
+        }else{
+        //CODIGO TEMPORAL
+            puntaje = reciboIntent.getInt("intPuntaje");
+        }
+    }
+
+    //TEMPORAL
+    private void guardarPuntaje(int puntajeFirebase){
+        puntaje = puntajeFirebase;
+        String strPuntaje = "x0\n" + String.valueOf(puntaje);
+        tvwPuntaje.setText(strPuntaje);
+    }
+    //TEMPORAL
 
     private void obtenerReferenciasYSetearListeners(){
         Button btn1 = (Button) findViewById(R.id.btn1);

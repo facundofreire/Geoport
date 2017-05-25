@@ -94,7 +94,8 @@
         android:textColor="@color/colorTexto"
         android:id="@+id/tvwTimer"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        tools:ignore="RelativeOverlap" />
 
     <TextView
         android:id="@+id/textView2"
@@ -110,6 +111,10 @@
         android:id="@+id/btnProxActividad"
         android:layout_alignParentBottom="true"
         android:layout_alignEnd="@+id/tvwTimer"
-        android:visibility="gone" />
+        android:visibility="gone"
+        android:background="@color/colorPrimary"
+        android:textColor="@color/colorTexto"
+        tools:ignore="HardcodedText"/>
+
 
 </RelativeLayout>

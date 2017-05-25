@@ -6,16 +6,25 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.CountDownTimer;
 import android.os.Handler;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
+
+import com.google.firebase.FirebaseException;
+import com.google.firebase.FirebaseNetworkException;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 
 public class BanderasActivity extends AppCompatActivity {
@@ -23,15 +32,19 @@ public class BanderasActivity extends AppCompatActivity {
     String[] vecPaisesFaciles;
     String[] vecPaisesMedios;
     String[] vecPaisesDificiles;
+
     TextView tvwPais;
     TextView tvwCorrecto;
     TextView tvwPuntaje;
     TextView tvwTiempo;
+
     int idCorrecto;
     int puntaje = 0;
     int contCombo = 0;
+
     ArrayList<String> lstUltimoPais = new ArrayList<>();
     ArrayList<Integer> lstIdImb = new ArrayList<>();
+
     CountDownTimer cTimer = null;
 
     @Override
@@ -96,7 +109,7 @@ public class BanderasActivity extends AppCompatActivity {
     };
 
     private void empezarTimer(){
-        cTimer = new CountDownTimer(30000, 1000) {
+        cTimer = new CountDownTimer(10000, 1000) {
             public void onTick(long milisegundos) {
                 if (milisegundos < 10000){
                     tvwTiempo.setText("0:0" + milisegundos / 1000);
@@ -108,7 +121,6 @@ public class BanderasActivity extends AppCompatActivity {
                     tvwTiempo.setText("0:" + milisegundos / 1000);
                 }
             }
-
             public void onFinish() {
                 nuevaActividad();
             }
@@ -157,6 +169,7 @@ public class BanderasActivity extends AppCompatActivity {
         }
     }
 
+    @Nullable
     private Drawable traerImagen(String strPais){
         try {
             InputStream stream = getAssets().open("flags/" + strPais.replace(' ', '_') + ".png");
@@ -188,6 +201,20 @@ public class BanderasActivity extends AppCompatActivity {
         @Override
         public void onClick(View view) {
             Intent intent = new Intent(getApplicationContext(), FormasActivity.class);
+
+            //CODIGO TEMPORAL
+            try{
+                DatabaseReference dataBase = FirebaseDatabase.getInstance()
+                        .getReference();
+                Map<String, Object> dbPuntaje = new HashMap<>();
+                dbPuntaje.put("/Usuario/puntaje", puntaje);
+                dataBase.updateChildren(dbPuntaje);
+                intent.putExtra("puntajeEnFirebase", true);
+            }catch (Exception error){
+                intent.putExtra("puntajeEnFirebase", false);
+            }
+            //CODIGO TEMPORAL
+
             intent.putExtra("intPuntaje", puntaje);
             startActivity(intent);
             finish();
