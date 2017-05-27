@@ -26,7 +26,7 @@
         android:layout_height="75dp"
         android:id="@+id/imbBandera1"
         android:layout_marginTop="43dp"
-        android:scaleType="centerCrop"
+        android:scaleType="fitCenter"
         android:adjustViewBounds="true"
         android:layout_below="@+id/tvwPais"
         android:layout_alignParentStart="true"
@@ -40,7 +40,7 @@
         android:layout_alignBottom="@+id/imbBandera1"
         android:layout_alignParentEnd="true"
         android:layout_marginEnd="43dp"
-        android:scaleType="centerCrop"
+        android:scaleType="fitCenter"
         android:adjustViewBounds="true"
         android:background="@null" />
 
@@ -51,7 +51,7 @@
         android:layout_marginTop="83dp"
         android:layout_below="@+id/imbBandera1"
         android:layout_alignStart="@+id/imbBandera1"
-        android:scaleType="centerCrop"
+        android:scaleType="fitCenter"
         android:adjustViewBounds="true"
         android:background="@null" />
 
@@ -59,22 +59,11 @@
         android:layout_width="112dp"
         android:layout_height="75dp"
         android:id="@+id/imbBandera4"
-        android:scaleType="centerCrop"
+        android:scaleType="fitCenter"
         android:adjustViewBounds="true"
         android:layout_alignTop="@+id/imbBandera3"
         android:layout_alignStart="@+id/imbBandera2"
         android:background="@null" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text=""
-        android:textColor="@color/colorTexto"
-        android:id="@+id/tvwCorrecto"
-        android:layout_marginTop="62dp"
-        android:layout_below="@+id/imbBandera3"
-        android:layout_centerHorizontal="true" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -97,13 +86,6 @@
         android:layout_alignParentEnd="true"
         tools:ignore="RelativeOverlap" />
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/imbBandera1"
-        android:layout_toStartOf="@+id/tvwPais" />
-
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -115,6 +97,28 @@
         android:background="@color/colorPrimary"
         android:textColor="@color/colorTexto"
         tools:ignore="HardcodedText"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Medium Text"
+        android:id="@+id/textView3"
+        android:layout_below="@+id/btnProxActividad"
+        android:layout_alignParentStart="true" />
+
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/imbBandera3"
+        android:layout_centerHorizontal="true">
+        <ImageView
+            android:layout_width="150dp"
+            android:layout_height="148dp"
+            android:id="@+id/imvCorrecto"
+            android:visibility="gone"
+            android:background="@null"/>
+    </FrameLayout>
 
 
 </RelativeLayout>

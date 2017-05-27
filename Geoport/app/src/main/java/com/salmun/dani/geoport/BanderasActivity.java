@@ -12,10 +12,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.google.firebase.FirebaseException;
-import com.google.firebase.FirebaseNetworkException;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -34,9 +33,9 @@ public class BanderasActivity extends AppCompatActivity {
     String[] vecPaisesDificiles;
 
     TextView tvwPais;
-    TextView tvwCorrecto;
     TextView tvwPuntaje;
     TextView tvwTiempo;
+    ImageView imvCorrecto;
 
     int idCorrecto;
     int puntaje = 0;
@@ -62,9 +61,9 @@ public class BanderasActivity extends AppCompatActivity {
         ImageButton imbBandera3 = (ImageButton) findViewById(R.id.imbBandera3);
         ImageButton imbBandera4 = (ImageButton) findViewById(R.id.imbBandera4);
         tvwPais = (TextView) findViewById(R.id.tvwPais);
-        tvwCorrecto = (TextView) findViewById(R.id.tvwCorrecto);
         tvwPuntaje = (TextView) findViewById(R.id.tvwScore);
         tvwTiempo = (TextView) findViewById(R.id.tvwTimer);
+        imvCorrecto = (ImageView) findViewById(R.id.imvCorrecto);
 
         vecPaises = getResources().getStringArray(R.array.paises_array);
         vecPaisesFaciles = getResources().getStringArray(R.array.paises_array_facil);
@@ -90,18 +89,25 @@ public class BanderasActivity extends AppCompatActivity {
         @Override
         public void onClick(View view) {
             if (view.getId() == idCorrecto){
-                tvwCorrecto.setText("Correcto");
+                imvCorrecto.setImageResource(R.drawable.tick);
                 contCombo++;
                 puntaje += contCombo / 2 + 1;
             }
             else {
-                tvwCorrecto.setText("Incorrecto");
+                imvCorrecto.setImageResource(R.drawable.cross);
                 if (contCombo == 0){
                     puntaje -= 1;
                 }
                 contCombo = 0;
                 lstUltimoPais.remove(lstUltimoPais.size() - 1);
             }
+            imvCorrecto.setVisibility(View.VISIBLE);
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    imvCorrecto.setVisibility(View.GONE);
+                }
+            }, 500);
             String mostrarPuntajeYCombo = "x" + String.valueOf(contCombo) + "\n" + String.valueOf(puntaje);
             tvwPuntaje.setText(mostrarPuntajeYCombo);
             elegirPais();
@@ -109,7 +115,7 @@ public class BanderasActivity extends AppCompatActivity {
     };
 
     private void empezarTimer(){
-        cTimer = new CountDownTimer(10000, 1000) {
+        cTimer = new CountDownTimer(30000, 1000) {
             public void onTick(long milisegundos) {
                 if (milisegundos < 10000){
                     tvwTiempo.setText("0:0" + milisegundos / 1000);
@@ -189,7 +195,6 @@ public class BanderasActivity extends AppCompatActivity {
             imbTemp.setEnabled(false);
             imbTemp.setImageResource(R.drawable.logo_geoport);
         }
-        tvwCorrecto.setText("");
         tvwTiempo.setVisibility(View.INVISIBLE);
         Button btnProxActividad = (Button) findViewById(R.id.btnProxActividad);
         assert btnProxActividad != null;

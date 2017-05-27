@@ -138,7 +138,7 @@ public class FormasActivity extends AppCompatActivity {
             InputStream stream = getAssets().open("maps/" + strPais.replace(' ', '_') + ".png");
             return Drawable.createFromStream(stream, null);
         }
-        catch(IOException ex) {
+        catch(IOException ex){
             return null;
         }
     }
@@ -163,6 +163,7 @@ public class FormasActivity extends AppCompatActivity {
             }
             String strMostrarComboYPuntaje = "x" + String.valueOf(contCombo) + "\n" + String.valueOf(puntaje);
             tvwPuntaje.setText(strMostrarComboYPuntaje);
+            elegirPais();
         }
     };
 }
