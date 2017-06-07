@@ -1,6 +1,10 @@
 package com.salmun.dani.geoport;
 
+import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.os.CountDownTimer;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -8,12 +12,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -25,6 +23,7 @@ public class FormasActivity extends AppCompatActivity {
 
     String[] vecPaisesFaciles;
     ArrayList<Integer> lstIdBtn = new ArrayList<>();
+    ArrayList<String> lstPaisesRepetidosGlobal = new ArrayList<>();
 
     int contCombo = 0;
     int puntaje;
@@ -34,6 +33,10 @@ public class FormasActivity extends AppCompatActivity {
     TextView tvwPuntaje;
     TextView tvwTiempo;
     ImageView imvPais;
+    ImageView imvCorrecto;
+    Button btnContinuar;
+
+    CountDownTimer cTimer = null;
 
 
     //TODO:SEGUIR CON ELEGIRPAIS
@@ -42,41 +45,11 @@ public class FormasActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_formas);
-        reciboIntentOFirebase();
+        puntaje = getIntent().getIntExtra("intPuntaje", 0);
         obtenerReferenciasYSetearListeners();
         elegirPais();
+        empezarTimer();
     }
-
-    private void reciboIntentOFirebase(){
-        //CODIGO TEMPORAL
-        Bundle reciboIntent = getIntent().getExtras();
-        if (reciboIntent.getBoolean("puntajeEnFirebase")){
-            DatabaseReference dataBase = FirebaseDatabase.getInstance()
-                    .getReference("/Usuario/puntaje");
-            dataBase.addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    guardarPuntaje(dataSnapshot.getValue(Integer.class));
-                }
-
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-                    guardarPuntaje(getIntent().getExtras().getInt("intPuntaje"));
-                }
-            });
-        }else{
-        //CODIGO TEMPORAL
-            puntaje = reciboIntent.getInt("intPuntaje");
-        }
-    }
-
-    //TEMPORAL
-    private void guardarPuntaje(int puntajeFirebase){
-        puntaje = puntajeFirebase;
-        String strPuntaje = "x0\n" + String.valueOf(puntaje);
-        tvwPuntaje.setText(strPuntaje);
-    }
-    //TEMPORAL
 
     private void obtenerReferenciasYSetearListeners(){
         Button btn1 = (Button) findViewById(R.id.btn1);
@@ -84,8 +57,10 @@ public class FormasActivity extends AppCompatActivity {
         Button btn3 = (Button) findViewById(R.id.btn3);
         Button btn4 = (Button) findViewById(R.id.btn4);
         imvPais = (ImageView) findViewById(R.id.imvPais);
+        imvCorrecto = (ImageView) findViewById(R.id.imvCorrecto);
         tvwPuntaje = (TextView) findViewById(R.id.tvwScore);
         tvwTiempo = (TextView) findViewById(R.id.tvwTimer);
+        btnContinuar = (Button) findViewById(R.id.btnContinuar);
 
         assert btn1 != null;
         assert btn2 != null;
@@ -103,9 +78,37 @@ public class FormasActivity extends AppCompatActivity {
         btn4.setOnClickListener(onClickListener);
     }
 
-    private void elegirPais(){
+    private void empezarTimer(){
+        cTimer = new CountDownTimer(30000, 1000) {
+            public void onTick(long milisegundos) {
+                if (milisegundos < 10000){
+                    tvwTiempo.setText("0:0" + milisegundos / 1000);
+                    if (milisegundos < 5000){
+                        tvwTiempo.setTextColor(Color.parseColor("#be0000"));
+                    }
+                }
+                else{
+                    tvwTiempo.setText("0:" + milisegundos / 1000);
+                }
+            }
+            public void onFinish() {
+                nuevaActividad();
+            }
+        };
+        cTimer.start();
+    }
+
+    private boolean elegirPais(){
         Random r = new Random();
         String strPaisCorrecto = vecPaisesFaciles[r.nextInt(vecPaisesFaciles.length)];
+        if (lstPaisesRepetidosGlobal.size() != vecPaisesFaciles.length) {
+            while (lstPaisesRepetidosGlobal.contains(strPaisCorrecto)) {
+                strPaisCorrecto = vecPaisesFaciles[r.nextInt(vecPaisesFaciles.length)];
+            }
+        }else{
+            nuevaActividad();
+            return false;
+        }
 
         assert imvPais != null;
         imvPais.setImageDrawable(traerImagen(strPaisCorrecto));
@@ -119,6 +122,7 @@ public class FormasActivity extends AppCompatActivity {
         ArrayList<String> lstPaisesRepetidos = new ArrayList<>();
 
         lstPaisesRepetidos.add(strPaisCorrecto);
+        lstPaisesRepetidosGlobal.add(strPaisCorrecto);
         for (int i = 1; i < 4; i++){
             String strPaisesBotones = vecPaisesFaciles[r.nextInt(vecPaisesFaciles.length)];
             while(lstPaisesRepetidos.contains(strPaisesBotones)){
@@ -130,6 +134,7 @@ public class FormasActivity extends AppCompatActivity {
             assert btnTemp != null;
             btnTemp.setText(strPaisesBotones);
         }
+        return true;
     }
 
     @Nullable
@@ -147,23 +152,50 @@ public class FormasActivity extends AppCompatActivity {
         @Override
         public void onClick(View view) {
             if (idCorrecto == view.getId()){
-                //TEMPORAL
-                tvwTiempo.setText("Correcto");
-                //TEMPORAL
+                imvCorrecto.setImageResource(R.drawable.tick);
                 contCombo++;
                 puntaje += contCombo * 2;
             }else{
-                //TEMPORAL
-                tvwTiempo.setText("Incorrecto");
-                //TEMPORAL
+                imvCorrecto.setImageResource(R.drawable.cross);
                 if (contCombo == 0){
                     puntaje -= 2;
                 }
                 contCombo = 0;
             }
+            imvCorrecto.setVisibility(View.VISIBLE);
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    imvCorrecto.setVisibility(View.GONE);
+                }
+            }, 500);
             String strMostrarComboYPuntaje = "x" + String.valueOf(contCombo) + "\n" + String.valueOf(puntaje);
             tvwPuntaje.setText(strMostrarComboYPuntaje);
             elegirPais();
+        }
+    };
+
+    private void nuevaActividad(){
+        cTimer.cancel();
+        imvPais.setImageResource(R.drawable.logo_geoport);
+        for (int idBtn:lstIdBtn){
+            Button btnTemp = (Button)findViewById(idBtn);
+            assert btnTemp != null;
+            btnTemp.setEnabled(false);
+            btnTemp.setText("¡Fin!");
+        }
+        tvwTiempo.setVisibility(View.INVISIBLE);
+        btnContinuar.setVisibility(View.VISIBLE);
+        btnContinuar.setOnClickListener(clickProxActividad);
+    }
+
+    private View.OnClickListener clickProxActividad = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            Intent intent = new Intent(getApplicationContext(), FormasActivity.class);
+            intent.putExtra("intPuntaje", puntaje);
+            startActivity(intent);
+            finish();
         }
     };
 }

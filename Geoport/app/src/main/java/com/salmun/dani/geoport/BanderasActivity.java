@@ -15,15 +15,10 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Random;
 
 public class BanderasActivity extends AppCompatActivity {
@@ -206,20 +201,6 @@ public class BanderasActivity extends AppCompatActivity {
         @Override
         public void onClick(View view) {
             Intent intent = new Intent(getApplicationContext(), FormasActivity.class);
-
-            //CODIGO TEMPORAL
-            try{
-                DatabaseReference dataBase = FirebaseDatabase.getInstance()
-                        .getReference();
-                Map<String, Object> dbPuntaje = new HashMap<>();
-                dbPuntaje.put("/Usuario/puntaje", puntaje);
-                dataBase.updateChildren(dbPuntaje);
-                intent.putExtra("puntajeEnFirebase", true);
-            }catch (Exception error){
-                intent.putExtra("puntajeEnFirebase", false);
-            }
-            //CODIGO TEMPORAL
-
             intent.putExtra("intPuntaje", puntaje);
             startActivity(intent);
             finish();

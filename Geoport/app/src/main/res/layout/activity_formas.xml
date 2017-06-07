@@ -77,9 +77,33 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Large Text"
         android:textColor="@color/colorTexto"
         android:id="@+id/tvwScore"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true" />
+
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/btn3"
+        android:layout_centerHorizontal="true">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="148dp"
+            android:id="@+id/imvCorrecto"
+            android:visibility="gone"
+            android:background="@null"/>
+    </FrameLayout>
+
+    <Button
+        android:id="@+id/btnContinuar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:text="Continue"
+        android:textColor="@color/colorTexto"
+        android:background="@color/colorPrimary"
+        android:visibility="gone" />
+
 </RelativeLayout>
