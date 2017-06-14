@@ -24,7 +24,6 @@
     <Button
         android:layout_width="115dp"
         android:layout_height="wrap_content"
-        android:text="New Button"
         android:id="@+id/btn1"
         android:layout_marginTop="42dp"
         android:layout_below="@+id/imvPais"
@@ -35,7 +34,6 @@
     <Button
         android:layout_width="115dp"
         android:layout_height="wrap_content"
-        android:text="New Button"
         android:id="@+id/btn2"
         android:layout_alignTop="@+id/btn1"
         android:layout_alignParentEnd="true"
@@ -45,7 +43,6 @@
     <Button
         android:layout_width="115dp"
         android:layout_height="wrap_content"
-        android:text="New Button"
         android:id="@+id/btn3"
         android:layout_alignTop="@+id/btn4"
         android:layout_alignStart="@+id/btn1"
@@ -55,7 +52,6 @@
     <Button
         android:layout_width="115dp"
         android:layout_height="wrap_content"
-        android:text="New Button"
         android:id="@+id/btn4"
         android:layout_marginTop="44dp"
         android:layout_below="@+id/btn2"
@@ -67,7 +63,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Large Text"
         android:textColor="@color/colorTexto"
         android:id="@+id/tvwTimer"
         android:layout_alignTop="@+id/tvwScore"
@@ -101,7 +96,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
-        android:text="Continue"
+        android:text="@string/continuar"
         android:textColor="@color/colorTexto"
         android:background="@color/colorPrimary"
         android:visibility="gone" />

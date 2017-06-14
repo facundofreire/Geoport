@@ -1,5 +1,6 @@
 package com.salmun.dani.geoport;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
@@ -21,9 +22,11 @@ import java.util.Random;
 
 public class FormasActivity extends AppCompatActivity {
 
-    String[] vecPaisesFaciles;
+    String[] vecPaises;
+    int[] vecDificultad;
+
     ArrayList<Integer> lstIdBtn = new ArrayList<>();
-    ArrayList<String> lstPaisesRepetidosGlobal = new ArrayList<>();
+    ArrayList<Integer> lstPaisesRepetidosGlobal = new ArrayList<>();
 
     int contCombo = 0;
     int puntaje;
@@ -37,9 +40,6 @@ public class FormasActivity extends AppCompatActivity {
     Button btnContinuar;
 
     CountDownTimer cTimer = null;
-
-
-    //TODO:SEGUIR CON ELEGIRPAIS
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,11 +62,13 @@ public class FormasActivity extends AppCompatActivity {
         tvwTiempo = (TextView) findViewById(R.id.tvwTimer);
         btnContinuar = (Button) findViewById(R.id.btnContinuar);
 
+        vecPaises = getResources().getStringArray(R.array.paises_array);
+        vecDificultad = getResources().getIntArray(R.array.dificultadPaises);
+
         assert btn1 != null;
         assert btn2 != null;
         assert btn3 != null;
         assert btn4 != null;
-        vecPaisesFaciles = getResources().getStringArray(R.array.paises_array_facil);
         lstIdBtn.add(btn1.getId());
         lstIdBtn.add(btn2.getId());
         lstIdBtn.add(btn3.getId());
@@ -80,6 +82,7 @@ public class FormasActivity extends AppCompatActivity {
 
     private void empezarTimer(){
         cTimer = new CountDownTimer(30000, 1000) {
+            @SuppressLint("SetTextI18n")
             public void onTick(long milisegundos) {
                 if (milisegundos < 10000){
                     tvwTiempo.setText("0:0" + milisegundos / 1000);
@@ -100,10 +103,18 @@ public class FormasActivity extends AppCompatActivity {
 
     private boolean elegirPais(){
         Random r = new Random();
-        String strPaisCorrecto = vecPaisesFaciles[r.nextInt(vecPaisesFaciles.length)];
-        if (lstPaisesRepetidosGlobal.size() != vecPaisesFaciles.length) {
-            while (lstPaisesRepetidosGlobal.contains(strPaisCorrecto)) {
-                strPaisCorrecto = vecPaisesFaciles[r.nextInt(vecPaisesFaciles.length)];
+        //TODO: CAMBIAR DIFICULTAD
+        int dificultad = 0;
+        if (contCombo < 6){
+            dificultad = 0;
+        }else if(contCombo > 10){
+            dificultad = 0;
+        }
+        int posicion = r.nextInt(vecPaises.length);
+        if (lstPaisesRepetidosGlobal.size() != vecPaises.length) {
+            while (lstPaisesRepetidosGlobal.contains(posicion)
+                    || vecDificultad[posicion] != dificultad){
+                posicion = r.nextInt(vecPaises.length);
             }
         }else{
             nuevaActividad();
@@ -111,36 +122,36 @@ public class FormasActivity extends AppCompatActivity {
         }
 
         assert imvPais != null;
-        imvPais.setImageDrawable(traerImagen(strPaisCorrecto));
+        imvPais.setImageDrawable(traerImagen(posicion));
 
         Collections.shuffle(lstIdBtn);
         idCorrecto = lstIdBtn.get(0);
         Button btnTemp = (Button) findViewById(idCorrecto);
         assert btnTemp != null;
-        btnTemp.setText(strPaisCorrecto);
+        btnTemp.setText(vecPaises[posicion]);
 
-        ArrayList<String> lstPaisesRepetidos = new ArrayList<>();
+        ArrayList<Integer> lstPaisesRepetidos = new ArrayList<>();
 
-        lstPaisesRepetidos.add(strPaisCorrecto);
-        lstPaisesRepetidosGlobal.add(strPaisCorrecto);
+        lstPaisesRepetidos.add(posicion);
+        lstPaisesRepetidosGlobal.add(posicion);
         for (int i = 1; i < 4; i++){
-            String strPaisesBotones = vecPaisesFaciles[r.nextInt(vecPaisesFaciles.length)];
-            while(lstPaisesRepetidos.contains(strPaisesBotones)){
-                strPaisesBotones = vecPaisesFaciles[r.nextInt(vecPaisesFaciles.length)];
+            posicion = r.nextInt(vecPaises.length);
+            while(lstPaisesRepetidos.contains(posicion)){
+                posicion = r.nextInt(vecPaises.length);
             }
-            lstPaisesRepetidos.add(strPaisesBotones);
+            lstPaisesRepetidos.add(posicion);
 
             btnTemp = (Button) findViewById(lstIdBtn.get(i));
             assert btnTemp != null;
-            btnTemp.setText(strPaisesBotones);
+            btnTemp.setText(vecPaises[posicion]);
         }
         return true;
     }
 
     @Nullable
-    private Drawable traerImagen(String strPais){
+    private Drawable traerImagen(int nombreImg){
         try {
-            InputStream stream = getAssets().open("maps/" + strPais.replace(' ', '_') + ".png");
+            InputStream stream = getAssets().open("mapsTest/" + String.valueOf(nombreImg) + ".png");
             return Drawable.createFromStream(stream, null);
         }
         catch(IOException ex){
@@ -182,7 +193,7 @@ public class FormasActivity extends AppCompatActivity {
             Button btnTemp = (Button)findViewById(idBtn);
             assert btnTemp != null;
             btnTemp.setEnabled(false);
-            btnTemp.setText("¡Fin!");
+            btnTemp.setText(R.string.fin);
         }
         tvwTiempo.setVisibility(View.INVISIBLE);
         btnContinuar.setVisibility(View.VISIBLE);

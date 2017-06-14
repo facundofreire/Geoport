@@ -15,8 +15,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".BanderasActivity" />
-        <activity android:name=".FormasActivity"></activity>
+        <activity android:name=".BanderasActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".FormasActivity"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

@@ -1,5 +1,6 @@
 package com.salmun.dani.geoport;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 
 import android.graphics.Color;
@@ -23,9 +24,7 @@ import java.util.Random;
 
 public class BanderasActivity extends AppCompatActivity {
     String[] vecPaises;
-    String[] vecPaisesFaciles;
-    String[] vecPaisesMedios;
-    String[] vecPaisesDificiles;
+    int[] vecDificultad;
 
     TextView tvwPais;
     TextView tvwPuntaje;
@@ -36,7 +35,7 @@ public class BanderasActivity extends AppCompatActivity {
     int puntaje = 0;
     int contCombo = 0;
 
-    ArrayList<String> lstUltimoPais = new ArrayList<>();
+    ArrayList<Integer> lstUltimoPais = new ArrayList<>();
     ArrayList<Integer> lstIdImb = new ArrayList<>();
 
     CountDownTimer cTimer = null;
@@ -61,9 +60,7 @@ public class BanderasActivity extends AppCompatActivity {
         imvCorrecto = (ImageView) findViewById(R.id.imvCorrecto);
 
         vecPaises = getResources().getStringArray(R.array.paises_array);
-        vecPaisesFaciles = getResources().getStringArray(R.array.paises_array_facil);
-        vecPaisesMedios = getResources().getStringArray(R.array.paises_array_media);
-        vecPaisesDificiles = getResources().getStringArray(R.array.paises_array_dificil);
+        vecDificultad = getResources().getIntArray(R.array.dificultadPaises);
 
         assert imbBandera1 != null;
         assert imbBandera2 != null;
@@ -111,6 +108,7 @@ public class BanderasActivity extends AppCompatActivity {
 
     private void empezarTimer(){
         cTimer = new CountDownTimer(30000, 1000) {
+            @SuppressLint("SetTextI18n")
             public void onTick(long milisegundos) {
                 if (milisegundos < 10000){
                     tvwTiempo.setText("0:0" + milisegundos / 1000);
@@ -131,49 +129,46 @@ public class BanderasActivity extends AppCompatActivity {
 
     private void elegirPais(){
         Random r = new Random();
-        ArrayList<String> lstRepetido = new ArrayList<>();
-        int intVecLenght = vecPaises.length;
+        ArrayList<Integer> lstRepetido = new ArrayList<>();
 
         Collections.shuffle(lstIdImb);
 
-        String strPais = "";
-        ImageButton imbTemp = (ImageButton) findViewById(lstIdImb.get(0));
+        int dificultad = 1;
+        if(contCombo < 6){
+            dificultad = 0;
+        }
+        if(contCombo >= 14){
+            dificultad = 2;
+        }
 
+        int posicion;
         do {
-            if (contCombo < 6) {
-                strPais = vecPaisesFaciles[r.nextInt(vecPaisesFaciles.length)];
-            }
-            if (contCombo >= 6 && contCombo < 14) {
-                strPais = vecPaisesMedios[r.nextInt(vecPaisesMedios.length)];
-            }
-            if (contCombo >= 14) {
-                strPais = vecPaisesDificiles[r.nextInt(vecPaisesDificiles.length)];
-            }
-        } while (lstUltimoPais.contains(strPais));
-        lstUltimoPais.add(strPais);
+            posicion = r.nextInt(vecPaises.length);
+        } while (lstUltimoPais.contains(posicion) || vecDificultad[posicion] != dificultad);
+        lstUltimoPais.add(posicion);
 
+        ImageButton imbTemp = (ImageButton) findViewById(lstIdImb.get(0));
         assert imbTemp != null;
-        imbTemp.setImageDrawable(traerImagen(strPais));
-        lstRepetido.add(strPais);
+        imbTemp.setImageDrawable(traerImagen(posicion));
+        lstRepetido.add(posicion);
         idCorrecto = imbTemp.getId();
-        strPais = strPais.substring(0, 1).toUpperCase() + strPais.substring(1);
-        tvwPais.setText(strPais);
+        tvwPais.setText(vecPaises[posicion]);
         for (int i = 1; i<4; i++) {
-            strPais = vecPaises[r.nextInt(intVecLenght)];
-            while (lstRepetido.contains(strPais)){
-                strPais = vecPaises[r.nextInt(intVecLenght)];
+            posicion = r.nextInt(vecPaises.length);
+            while (lstRepetido.contains(posicion)){
+                posicion = r.nextInt(vecPaises.length);
             }
-            lstRepetido.add(strPais);
+            lstRepetido.add(posicion);
             imbTemp = (ImageButton) findViewById(lstIdImb.get(i));
             assert imbTemp != null;
-            imbTemp.setImageDrawable(traerImagen(strPais));
+            imbTemp.setImageDrawable(traerImagen(posicion));
         }
     }
 
     @Nullable
-    private Drawable traerImagen(String strPais){
+    private Drawable traerImagen(int nombreImg){
         try {
-            InputStream stream = getAssets().open("flags/" + strPais.replace(' ', '_') + ".png");
+            InputStream stream = getAssets().open("flagsTest/" + String.valueOf(nombreImg + 1) + ".png");
             return Drawable.createFromStream(stream, null);
         }
         catch(IOException ex) {
@@ -183,7 +178,7 @@ public class BanderasActivity extends AppCompatActivity {
 
     private void nuevaActividad(){
         cTimer.cancel();
-        tvwPais.setText("¡Fin!");
+        tvwPais.setText(R.string.fin);
         for (Integer idImb:lstIdImb) {
             ImageButton imbTemp = (ImageButton) findViewById(idImb);
             assert imbTemp != null;
