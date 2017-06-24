@@ -4,6 +4,8 @@
     <string name="jugar">Play</string>
     <string name="idioma">English</string>
     <string name="continuar">CONTINUE</string>
+    <string name="title_activity_ubicacion">Map</string>
+
 
     <string-array name="paises_array">
         <item>Afghanistan</item>
@@ -39,6 +41,7 @@
         <item>Canada</item>
         <item>Cape Verde</item>
         <item>Chile</item>
+        <item>China</item>
         <item>Colombia</item>
         <item>Comoros</item>
         <item>Congo</item>

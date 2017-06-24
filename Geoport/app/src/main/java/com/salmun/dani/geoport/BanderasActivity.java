@@ -107,7 +107,7 @@ public class BanderasActivity extends AppCompatActivity {
     };
 
     private void empezarTimer(){
-        cTimer = new CountDownTimer(30000, 1000) {
+        cTimer = new CountDownTimer(1000, 1000) {
             @SuppressLint("SetTextI18n")
             public void onTick(long milisegundos) {
                 if (milisegundos < 10000){

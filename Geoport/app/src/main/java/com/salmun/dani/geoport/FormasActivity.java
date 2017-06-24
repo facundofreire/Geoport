@@ -81,7 +81,7 @@ public class FormasActivity extends AppCompatActivity {
     }
 
     private void empezarTimer(){
-        cTimer = new CountDownTimer(30000, 1000) {
+        cTimer = new CountDownTimer(1000, 1000) {
             @SuppressLint("SetTextI18n")
             public void onTick(long milisegundos) {
                 if (milisegundos < 10000){
@@ -103,19 +103,18 @@ public class FormasActivity extends AppCompatActivity {
 
     private boolean elegirPais(){
         Random r = new Random();
-        //TODO: CAMBIAR DIFICULTAD
-        int dificultad = 0;
+        int dificultad = 1;
         if (contCombo < 6){
             dificultad = 0;
         }else if(contCombo > 10){
-            dificultad = 0;
+            dificultad = 2;
         }
         int posicion = r.nextInt(vecPaises.length);
         if (lstPaisesRepetidosGlobal.size() != vecPaises.length) {
-            while (lstPaisesRepetidosGlobal.contains(posicion)
-                    || vecDificultad[posicion] != dificultad){
+            do {
                 posicion = r.nextInt(vecPaises.length);
-            }
+            }while (lstPaisesRepetidosGlobal.contains(posicion)
+                    || vecDificultad[posicion] != dificultad);
         }else{
             nuevaActividad();
             return false;
@@ -151,7 +150,7 @@ public class FormasActivity extends AppCompatActivity {
     @Nullable
     private Drawable traerImagen(int nombreImg){
         try {
-            InputStream stream = getAssets().open("mapsTest/" + String.valueOf(nombreImg) + ".png");
+            InputStream stream = getAssets().open("mapsTest/" + String.valueOf(nombreImg + 1) + ".png");
             return Drawable.createFromStream(stream, null);
         }
         catch(IOException ex){
@@ -203,7 +202,7 @@ public class FormasActivity extends AppCompatActivity {
     private View.OnClickListener clickProxActividad = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            Intent intent = new Intent(getApplicationContext(), FormasActivity.class);
+            Intent intent = new Intent(getApplicationContext(), UbicacionActivity.class);
             intent.putExtra("intPuntaje", puntaje);
             startActivity(intent);
             finish();
