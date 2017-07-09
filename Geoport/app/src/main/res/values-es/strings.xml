@@ -5,8 +5,10 @@
     <string name="jugar">Jugar</string>
     <string name="idioma">Español</string>
 
+
+
     <string-array name="paises_array">
-        <item>afganistán</item>
+        <item>Afganistán</item>
         <item>Albania</item>
         <item>Algeria</item>
         <item>Andorra</item>
@@ -38,6 +40,7 @@
         <item>Camerún</item>
         <item>Canadá</item>
         <item>Cabo Verde</item>
+        <item>República Centroafricana</item>
         <item>Chile</item>
         <item>China</item>
         <item>Colombia</item>
@@ -53,6 +56,7 @@
         <item>Yibuti</item>
         <item>Dominica</item>
         <item>República Dominicana</item>
+        <item>Timor Oriental</item>
         <item>Ecuador</item>
         <item>Egipto</item>
         <item>El Salvador</item>
@@ -110,10 +114,14 @@
         <item>Maldivas</item>
         <item>Mali</item>
         <item>Malta</item>
+        <item>Islas Marshall</item>
         <item>Mauritania</item>
         <item>Mauricio</item>
         <item>México</item>
+        <item>Micronesia</item>
+        <item>Moldavia</item>
         <item>Mongolia</item>
+        <item>Montenegro</item>
         <item>Marruecos</item>
         <item>Mozambique</item>
         <item>Myanmar</item>
@@ -122,6 +130,7 @@
         <item>Nepal</item>
         <item>Países Bajos</item>
         <item>Nueva Zelanda</item>
+        <item>Nicaragua</item>
         <item>Níger</item>
         <item>Nigeria</item>
         <item>Corea del Norte</item>
@@ -194,6 +203,205 @@
         <item>Zimbabue</item>
     </string-array>
 
+
+
+
+
+    <string-array name="capitales_array">
+        <item>Kabul</item>
+        <item>Tirana</item>
+        <item>Alger</item>
+        <item>Andorra la Vieja</item>
+        <item>Luanda</item>
+        <item>Saint John</item>
+        <item>Buenos Aires</item>
+        <item>Ereván</item>
+        <item>Canberra</item>
+        <item>Viena</item>
+        <item>Bakú</item>
+        <item>Nasáu</item>
+        <item>Manama</item>
+        <item>Daca</item>
+        <item>Bridgetown</item>
+        <item>Minsk</item>
+        <item>Bruselas</item>
+        <item>Belmopán</item>
+        <item>Porto Novo</item>
+        <item>Timbu</item>
+        <item>La Paz</item>
+        <item>Sarajevo</item>
+        <item>Gaborone</item>
+        <item>Brasilia</item>
+        <item>Bandar Seri Begawan</item>
+        <item>Sofía</item>
+        <item>Uagadugú</item>
+        <item>Buyumbura</item>
+        <item>Phnom Penh</item>
+        <item>Yaundé</item>
+        <item>Ottawa</item>
+        <item>Praia</item>
+        <item>Bangui</item>
+        <item>Santiago de Chile</item>
+        <item>Beijing</item>
+        <item>Bogotá</item>
+        <item>Moroni</item>
+        <item>Brazzaville</item>
+        <item>San José</item>
+        <item>Zagreb</item>
+        <item>La Habana</item>
+        <item>Nicosia</item>
+        <item>Praga</item>
+        <item>Kinsasa</item>
+        <item>Copenhague</item>
+        <item>Yibuti</item>
+        <item>Roseau</item>
+        <item>Santo Domingo</item>
+        <item>Dili</item>
+        <item>Quito</item>
+        <item>El Cairo</item>
+        <item>San Salvador</item>
+        <item>Malabo</item>
+        <item>Asmara</item>
+        <item>Tallin</item>
+        <item>Adís Abeba</item>
+        <item>Suva</item>
+        <item>Helsinki</item>
+        <item>París</item>
+        <item>Libreville</item>
+        <item>Banjul</item>
+        <item>Tiflis</item>
+        <item>Berlín</item>
+        <item>Acra</item>
+        <item>Atenas</item>
+        <item>Saint George\'s</item>
+        <item>Ciudad de Guatemala</item>
+        <item>Conakri</item>
+        <item>Bisáu</item>
+        <item>Georgetown</item>
+        <item>Puerto Príncipe</item>
+        <item>Tegucigalpa</item>
+        <item>Budapest</item>
+        <item>Reikiavik</item>
+        <item>Nueva Delhi</item>
+        <item>Yakarta</item>
+        <item>Teherán</item>
+        <item>Bagdad</item>
+        <item>Dublín</item>
+        <item>Jerusalén</item>
+        <item>Roma</item>
+        <item>Yamusukro</item>
+        <item>Kingston</item>
+        <item>Tokio</item>
+        <item>Amán</item>
+        <item>Astaná</item>
+        <item>Nairobi</item>
+        <item>Tarawa</item>
+        <item>Ciudad de Kuwait</item>
+        <item>Biskek</item>
+        <item>Vientián</item>
+        <item>Riga</item>
+        <item>Beirut</item>
+        <item>Maseru</item>
+        <item>Monrovia</item>
+        <item>Trípoli</item>
+        <item>Vaduz</item>
+        <item>Vilna</item>
+        <item>Luxemburgo</item>
+        <item>Skopie</item>
+        <item>Antananarivo</item>
+        <item>Lilongüe</item>
+        <item>Kuala Lumpur</item>
+        <item>Malé</item>
+        <item>Bamako</item>
+        <item>La Valeta</item>
+        <item>Majuro</item>
+        <item>Nuakchot</item>
+        <item>Port Louis</item>
+        <item>Ciudad de México</item>
+        <item>Palikir</item>
+        <item>Chisináu</item>
+        <item>Ulán Bator</item>
+        <item>Podgorica</item>
+        <item>Rabat</item>
+        <item>Maputo</item>
+        <item>Naipyidó</item>
+        <item>Windhoek</item>
+        <item>Yaren</item>
+        <item>Katmandú</item>
+        <item>Ámsterdam</item>
+        <item>Wellington</item>
+        <item>Managua</item>
+        <item>Niamey</item>
+        <item>Abuya</item>
+        <item>Pionyang</item>
+        <item>Oslo</item>
+        <item>Mascate</item>
+        <item>Islamabad</item>
+        <item>Melekeok</item>
+        <item>Gaza</item>
+        <item>Panamá</item>
+        <item>Port Moresby</item>
+        <item>Asunción</item>
+        <item>Lima</item>
+        <item>Manila</item>
+        <item>Varsovia</item>
+        <item>Lisboa</item>
+        <item>Doha</item>
+        <item>Bucarest</item>
+        <item>Moscú</item>
+        <item>Kigali</item>
+        <item>Basseterre</item>
+        <item>Castries</item>
+        <item>Kingstown</item>
+        <item>Apia</item>
+        <item>Ciudad de San Marino</item>
+        <item>Santo Tomé</item>
+        <item>Riad</item>
+        <item>Dakar</item>
+        <item>Belgrado</item>
+        <item>Victoria</item>
+        <item>Freetown</item>
+        <item>Singapur</item>
+        <item>Bratislava</item>
+        <item>Liubliana</item>
+        <item>Honiara</item>
+        <item>Mogadiscio</item>
+        <item>Pretoria</item>
+        <item>Seúl</item>
+        <item>Yuba</item>
+        <item>Madrid</item>
+        <item>Colombo</item>
+        <item>Jartum</item>
+        <item>Paramaribo</item>
+        <item>Mbabane</item>
+        <item>Estocolmo</item>
+        <item>Berna</item>
+        <item>Damasco</item>
+        <item>Dusambé</item>
+        <item>Dodoma</item>
+        <item>Bangkok</item>
+        <item>Lomé</item>
+        <item>Nukualofa</item>
+        <item>Puerto España</item>
+        <item>Túnez</item>
+        <item>Ankara</item>
+        <item>Asjabad</item>
+        <item>Funafuti</item>
+        <item>Kampala</item>
+        <item>Kiev</item>
+        <item>Abu Dabi</item>
+        <item>Londres</item>
+        <item>Washington D.C.</item>
+        <item>Montevideo</item>
+        <item>Taskent</item>
+        <item>Port Vila</item>
+        <item>Ciudad del Vaticano</item>
+        <item>Caracas</item>
+        <item>Hanói</item>
+        <item>Saná</item>
+        <item>Lusaka</item>
+        <item>Harare</item>
+    </string-array>
 
     <string-array name="paises_array_dificil">
         <item>andorra</item>
@@ -389,4 +597,5 @@
         <item>vietnam</item>
     </string-array>
     <string name="continuar">CONTINUAR</string>
+    <string name="title_activity_ubicacion">Mapa</string>
 </resources>

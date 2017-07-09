@@ -1,4 +1,8 @@
-02/06
+30/06
+-oAuth
+-Facebook
+-Social Graph
+-Buscar una forma de identifación
 
 ------------------------------------------------------------------------
 

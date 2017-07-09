@@ -109,7 +109,7 @@ public class FormasActivity extends AppCompatActivity {
         }else if(contCombo > 10){
             dificultad = 2;
         }
-        int posicion = r.nextInt(vecPaises.length);
+        int posicion;
         if (lstPaisesRepetidosGlobal.size() != vecPaises.length) {
             do {
                 posicion = r.nextInt(vecPaises.length);

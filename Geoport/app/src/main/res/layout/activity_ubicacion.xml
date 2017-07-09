@@ -7,10 +7,43 @@
     android:layout_height="match_parent"
     tools:context="com.salmun.dani.geoport.UbicacionActivity"
     map:mapType="normal"
-    map:cameraZoom="0"
+    map:cameraZoom="1"
     map:uiRotateGestures="false"
-    map:uiScrollGestures="false"
+    map:uiScrollGestures="true"
     map:uiTiltGestures="false"
     map:uiZoomControls="false"
-    map:uiZoomGestures="false"
-    />
+    map:uiZoomGestures="false">
+    <TextView
+        android:id="@+id/tvwPais"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start|top"
+        android:text="TEST"
+        android:padding="10dp"
+        android:layout_margin="20dp"
+        android:background="@drawable/fondotextomap"
+        android:textColor="@color/colorTexto" />
+
+    <TextView
+        android:id="@+id/tvwPuntaje"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|top"
+        android:text=""
+        android:padding="10dp"
+        android:layout_margin="20dp"
+        android:background="@drawable/fondotextomap"
+        android:textColor="@color/colorTexto" />
+
+    <Button
+        android:id="@+id/btnContinuar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:text="@string/continuar"
+        android:visibility="gone"
+        android:padding="10dp"
+        android:layout_margin="20dp"
+        android:textColor="@color/colorTexto"
+        android:background="@color/colorPrimary" />
+</fragment>
