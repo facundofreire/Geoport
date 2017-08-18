@@ -59,29 +59,12 @@
         android:background="@color/colorPrimary"
         android:textColor="@color/colorTexto"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textColor="@color/colorTexto"
-        android:id="@+id/tvwTimer"
-        android:layout_alignTop="@+id/tvwScore"
-        android:layout_alignParentEnd="true" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textColor="@color/colorTexto"
-        android:id="@+id/tvwScore"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true" />
-
     <FrameLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/btn3"
-        android:layout_centerHorizontal="true">
+        android:layout_centerHorizontal="true"
+        android:id="@+id/frameLayout">
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="148dp"
@@ -91,14 +74,100 @@
     </FrameLayout>
 
     <Button
-        android:id="@+id/btnContinuar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
         android:text="@string/continuar"
-        android:textColor="@color/colorTexto"
+        android:id="@+id/btnProxActividad"
+        android:layout_alignParentBottom="true"
+        android:layout_alignEnd="@+id/tvwTimer"
+        android:padding="10dp"
+        android:visibility="gone"
         android:background="@color/colorPrimary"
-        android:visibility="gone" />
+        android:textColor="@color/colorTexto"
+        android:textSize="25sp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:background="@drawable/wrap_puntuacion"
+        android:padding="15dp"
+        android:layout_height="wrap_content"
+        android:textSize="25sp"
+        android:textColor="@color/colorTexto"
+        android:id="@+id/tvwScore"
+        android:text="0"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/wrap_puntuacion"
+        android:padding="15dp"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="@color/colorTexto"
+        android:textSize="25sp"
+        android:id="@+id/tvwTimer"
+        tools:ignore="RelativeOverlap"
+        android:text="A"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:id="@+id/tvwPaisError"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/frameLayout"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:textColor="@color/colorTexto"
+        android:textSize="20sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/correctas"
+        android:id="@+id/tvwContCorrectas"
+        android:layout_marginTop="100dp"
+        android:textColor="@color/colorTexto"
+        android:textSize="20sp"
+        android:visibility="invisible"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/incorrectas"
+        android:id="@+id/tvwContIncorrectas"
+        android:textColor="@color/colorTexto"
+        android:textSize="20sp"
+        android:visibility="invisible"
+        android:layout_below="@+id/tvwContCorrectas"
+        android:layout_alignStart="@+id/tvwContCorrectas"
+        android:layout_marginTop="30dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/comboMax"
+        android:id="@+id/tvwComboMax"
+        android:textColor="@color/colorTexto"
+        android:textSize="20sp"
+        android:visibility="invisible"
+        android:layout_below="@+id/tvwContIncorrectas"
+        android:layout_alignStart="@+id/tvwContCorrectas"
+        android:layout_marginTop="30dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="@color/colorTexto"
+        android:id="@+id/tvwFin"
+        android:text="@string/fin"
+        android:visibility="invisible"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="40dp"/>
 
 </RelativeLayout>

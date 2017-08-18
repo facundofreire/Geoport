@@ -26,17 +26,15 @@ public class BanderasActivity extends AppCompatActivity {
     String[] vecPaises;
     int[] vecDificultad;
 
-    TextView tvwPais;
-    TextView tvwPuntaje;
-    TextView tvwTiempo;
+    TextView tvwPais, tvwPaisError, tvwPuntaje, tvwTiempo,
+            tvwContCorrectas, tvwContIncorrectas, tvwComboMax;
     ImageView imvCorrecto;
 
-    int idCorrecto;
-    int puntaje = 0;
-    int contCombo = 0;
+    int puntaje, contCombo, contCorrectas, contIncorrectas, comboMax = 0;
 
     ArrayList<Integer> lstUltimoPais = new ArrayList<>();
     ArrayList<Integer> lstIdImb = new ArrayList<>();
+    ArrayList<Integer> lstRepetido;
 
     CountDownTimer cTimer = null;
 
@@ -49,6 +47,11 @@ public class BanderasActivity extends AppCompatActivity {
         empezarTimer();
     }
 
+    @Override
+    public void onBackPressed() {
+        //super.onBackPressed();
+    }
+
     private void obtenerReferenciasYSetearListeners(){
         ImageButton imbBandera1 = (ImageButton) findViewById(R.id.imbBandera1);
         ImageButton imbBandera2 = (ImageButton) findViewById(R.id.imbBandera2);
@@ -58,6 +61,10 @@ public class BanderasActivity extends AppCompatActivity {
         tvwPuntaje = (TextView) findViewById(R.id.tvwScore);
         tvwTiempo = (TextView) findViewById(R.id.tvwTimer);
         imvCorrecto = (ImageView) findViewById(R.id.imvCorrecto);
+        tvwPaisError = (TextView) findViewById(R.id.tvwPaisError);
+        tvwContCorrectas = (TextView) findViewById(R.id.tvwContCorrectas);
+        tvwContIncorrectas = (TextView) findViewById(R.id.tvwContIncorrectas);
+        tvwComboMax = (TextView) findViewById(R.id.tvwComboMax);
 
         vecPaises = getResources().getStringArray(R.array.paises_array);
         vecDificultad = getResources().getIntArray(R.array.dificultadPaises);
@@ -80,17 +87,30 @@ public class BanderasActivity extends AppCompatActivity {
     private View.OnClickListener clickImg = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            if (view.getId() == idCorrecto){
+            if (view.getId() == lstIdImb.get(0)){
                 imvCorrecto.setImageResource(R.drawable.tick);
                 contCombo++;
+                contCorrectas++;
                 puntaje += contCombo / 2 + 1;
+                tvwPaisError.setText("");
             }
             else {
+                for (int i = 1; i < 4; i++) {
+                    if (view.getId() == lstIdImb.get(i)) {
+                        String textoPaisError = getString(R.string.paisElegido) + vecPaises[lstRepetido.get(i)];
+                        tvwPaisError.setText(textoPaisError);
+                        break;
+                    }
+                }
                 imvCorrecto.setImageResource(R.drawable.cross);
                 if (contCombo == 0){
                     puntaje -= 1;
                 }
+                if (contCombo > comboMax){
+                    comboMax = contCombo;
+                }
                 contCombo = 0;
+                contIncorrectas++;
                 lstUltimoPais.remove(lstUltimoPais.size() - 1);
             }
             imvCorrecto.setVisibility(View.VISIBLE);
@@ -107,7 +127,7 @@ public class BanderasActivity extends AppCompatActivity {
     };
 
     private void empezarTimer(){
-        cTimer = new CountDownTimer(1000, 1000) {
+        cTimer = new CountDownTimer(10000, 1000) {
             @SuppressLint("SetTextI18n")
             public void onTick(long milisegundos) {
                 if (milisegundos < 10000){
@@ -129,7 +149,7 @@ public class BanderasActivity extends AppCompatActivity {
 
     private void elegirPais(){
         Random r = new Random();
-        ArrayList<Integer> lstRepetido = new ArrayList<>();
+        lstRepetido = new ArrayList<>();
 
         Collections.shuffle(lstIdImb);
 
@@ -151,7 +171,6 @@ public class BanderasActivity extends AppCompatActivity {
         assert imbTemp != null;
         imbTemp.setImageDrawable(traerImagen(posicion));
         lstRepetido.add(posicion);
-        idCorrecto = imbTemp.getId();
         tvwPais.setText(vecPaises[posicion]);
         for (int i = 1; i<4; i++) {
             posicion = r.nextInt(vecPaises.length);
@@ -179,13 +198,29 @@ public class BanderasActivity extends AppCompatActivity {
     private void nuevaActividad(){
         cTimer.cancel();
         tvwPais.setText(R.string.fin);
+
+        if (contCombo > comboMax){
+            comboMax = contCombo;
+        }
+
         for (Integer idImb:lstIdImb) {
             ImageButton imbTemp = (ImageButton) findViewById(idImb);
-            assert imbTemp != null;
-            imbTemp.setEnabled(false);
-            imbTemp.setImageResource(R.drawable.logo_geoport);
+            assert imbTemp!=null;
+            imbTemp.setVisibility(View.INVISIBLE);
         }
         tvwTiempo.setVisibility(View.INVISIBLE);
+        tvwPaisError.setVisibility(View.INVISIBLE);
+
+        String textoAMostrar = tvwContCorrectas.getText().toString() + String.valueOf(contCorrectas);
+        tvwContCorrectas.setText(textoAMostrar);
+        textoAMostrar = tvwContIncorrectas.getText().toString() + String.valueOf(contIncorrectas);
+        tvwContIncorrectas.setText(textoAMostrar);
+        textoAMostrar = tvwComboMax.getText().toString() + String.valueOf(comboMax);
+        tvwComboMax.setText(textoAMostrar);
+        tvwContCorrectas.setVisibility(View.VISIBLE);
+        tvwContIncorrectas.setVisibility(View.VISIBLE);
+        tvwComboMax.setVisibility(View.VISIBLE);
+
         Button btnProxActividad = (Button) findViewById(R.id.btnProxActividad);
         assert btnProxActividad != null;
         btnProxActividad.setVisibility(View.VISIBLE);
@@ -196,7 +231,7 @@ public class BanderasActivity extends AppCompatActivity {
         @Override
         public void onClick(View view) {
             Intent intent = new Intent(getApplicationContext(), FormasActivity.class);
-            intent.putExtra("intPuntaje", puntaje);
+            Usuario.escribirPuntaje(puntaje);
             startActivity(intent);
             finish();
         }

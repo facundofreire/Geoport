@@ -7,62 +7,45 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="@color/colorFondo"
     tools:context="com.salmun.dani.geoport.MenuActivity">
-
-
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
+    <ImageButton
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:weightSum="1">
+        android:id="@+id/btnMute"
+        android:src="@drawable/nota_musical"
+        android:background="@color/colorFondo"
+        android:contentDescription="Mute"/>
 
-        <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/btnMute"
-            android:src="@drawable/nota_musical"
-            android:contentDescription="Mute"/>
+    <ImageButton
+        android:layout_width="74dp"
+        android:layout_height="75dp"
+        android:scaleType="fitCenter"
+        android:id="@+id/btnFacebook"
+        android:layout_gravity="end"
+        android:adjustViewBounds="true"
+        android:contentDescription="Facebook"
+        android:background="@color/colorFondo"
+        android:layout_alignTop="@+id/imvLogo"
+        android:layout_alignParentEnd="true" />
 
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+    <ImageView
+        android:id="@+id/imvLogo"
+        android:src="@drawable/logo_geoport"
+        android:layout_width="280dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
 
-            <ImageButton
-                android:layout_width="74dp"
-                android:layout_height="75dp"
-                android:scaleType="fitCenter"
-                android:id="@+id/btnPlayGames"
-                android:layout_gravity="end"
-                android:adjustViewBounds="true"
-                android:contentDescription="Facebook"/>
-        </LinearLayout>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:weightSum="1">
-
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="93dp"
-            android:text="@string/app_name"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textSize="40sp" />
-
-        <Button
-            android:id="@+id/btnPlay"
-            android:layout_width="177dp"
-            android:layout_height="80dp"
-            android:layout_marginTop="140dp"
-            android:layout_gravity="center"
-            android:text="@string/jugar" />
-
-    </LinearLayout>
+    <Button
+        android:id="@+id/btnPlay"
+        android:layout_width="177dp"
+        android:layout_height="80dp"
+        android:layout_gravity="center"
+        android:text="@string/jugar"
+        android:textSize="25sp"
+        android:background="@color/colorPrimaryDark"
+        android:textColor="@color/colorTexto"
+        android:layout_alignBottom="@+id/imvLogo"
+        android:layout_centerHorizontal="true" />
 </RelativeLayout>

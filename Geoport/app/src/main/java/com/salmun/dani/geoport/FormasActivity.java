@@ -27,16 +27,13 @@ public class FormasActivity extends AppCompatActivity {
 
     ArrayList<Integer> lstIdBtn = new ArrayList<>();
     ArrayList<Integer> lstPaisesRepetidosGlobal = new ArrayList<>();
+    ArrayList<Integer> lstPaisesRepetidos;
 
-    int contCombo = 0;
-    int puntaje;
+    int puntaje, contCombo, contCorrectas, contIncorrectas, comboMax = 0;
 
-    int idCorrecto;
-
-    TextView tvwPuntaje;
-    TextView tvwTiempo;
-    ImageView imvPais;
-    ImageView imvCorrecto;
+    TextView tvwPuntaje, tvwTiempo, tvwContCorrectas, tvwPaisError,
+            tvwContIncorrectas, tvwComboMax, tvwFin;
+    ImageView imvPais, imvCorrecto;
     Button btnContinuar;
 
     CountDownTimer cTimer = null;
@@ -45,10 +42,15 @@ public class FormasActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_formas);
-        puntaje = getIntent().getIntExtra("intPuntaje", 0);
+        puntaje = Usuario.leerPuntaje();
         obtenerReferenciasYSetearListeners();
         elegirPais();
         empezarTimer();
+    }
+
+    @Override
+    public void onBackPressed() {
+        //super.onBackPressed();
     }
 
     private void obtenerReferenciasYSetearListeners(){
@@ -58,9 +60,15 @@ public class FormasActivity extends AppCompatActivity {
         Button btn4 = (Button) findViewById(R.id.btn4);
         imvPais = (ImageView) findViewById(R.id.imvPais);
         imvCorrecto = (ImageView) findViewById(R.id.imvCorrecto);
+        btnContinuar = (Button) findViewById(R.id.btnProxActividad);
+
         tvwPuntaje = (TextView) findViewById(R.id.tvwScore);
         tvwTiempo = (TextView) findViewById(R.id.tvwTimer);
-        btnContinuar = (Button) findViewById(R.id.btnContinuar);
+        tvwContCorrectas = (TextView) findViewById(R.id.tvwContCorrectas);
+        tvwContIncorrectas = (TextView) findViewById(R.id.tvwContIncorrectas);
+        tvwComboMax = (TextView) findViewById(R.id.tvwComboMax);
+        tvwFin = (TextView) findViewById(R.id.tvwFin);
+        tvwPaisError = (TextView) findViewById(R.id.tvwPaisError);
 
         vecPaises = getResources().getStringArray(R.array.paises_array);
         vecDificultad = getResources().getIntArray(R.array.dificultadPaises);
@@ -81,7 +89,7 @@ public class FormasActivity extends AppCompatActivity {
     }
 
     private void empezarTimer(){
-        cTimer = new CountDownTimer(1000, 1000) {
+        cTimer = new CountDownTimer(10000, 1000) {
             @SuppressLint("SetTextI18n")
             public void onTick(long milisegundos) {
                 if (milisegundos < 10000){
@@ -124,12 +132,11 @@ public class FormasActivity extends AppCompatActivity {
         imvPais.setImageDrawable(traerImagen(posicion));
 
         Collections.shuffle(lstIdBtn);
-        idCorrecto = lstIdBtn.get(0);
-        Button btnTemp = (Button) findViewById(idCorrecto);
+        Button btnTemp = (Button) findViewById(lstIdBtn.get(0));
         assert btnTemp != null;
         btnTemp.setText(vecPaises[posicion]);
 
-        ArrayList<Integer> lstPaisesRepetidos = new ArrayList<>();
+        lstPaisesRepetidos = new ArrayList<>();
 
         lstPaisesRepetidos.add(posicion);
         lstPaisesRepetidosGlobal.add(posicion);
@@ -161,16 +168,23 @@ public class FormasActivity extends AppCompatActivity {
     private View.OnClickListener onClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            if (idCorrecto == view.getId()){
+            if (lstIdBtn.get(0) == view.getId()){
                 imvCorrecto.setImageResource(R.drawable.tick);
                 contCombo++;
+                contCorrectas++;
                 puntaje += contCombo * 2;
             }else{
+                String textoPaisError = getString(R.string.paisCorrecto) + vecPaises[lstPaisesRepetidos.get(0)];
+                tvwPaisError.setText(textoPaisError);
                 imvCorrecto.setImageResource(R.drawable.cross);
                 if (contCombo == 0){
                     puntaje -= 2;
                 }
+                if(contCombo > comboMax){
+                    comboMax = contCombo;
+                }
                 contCombo = 0;
+                contIncorrectas++;
             }
             imvCorrecto.setVisibility(View.VISIBLE);
             new Handler().postDelayed(new Runnable() {
@@ -187,13 +201,29 @@ public class FormasActivity extends AppCompatActivity {
 
     private void nuevaActividad(){
         cTimer.cancel();
-        imvPais.setImageResource(R.drawable.logo_geoport);
+
+        if (contCombo > comboMax){
+            comboMax = contCombo;
+        }
+
+        imvPais.setVisibility(View.INVISIBLE);
         for (int idBtn:lstIdBtn){
             Button btnTemp = (Button)findViewById(idBtn);
             assert btnTemp != null;
-            btnTemp.setEnabled(false);
-            btnTemp.setText(R.string.fin);
+            btnTemp.setVisibility(View.INVISIBLE);
         }
+
+        String textoAMostrar = tvwContCorrectas.getText().toString() + String.valueOf(contCorrectas);
+        tvwContCorrectas.setText(textoAMostrar);
+        textoAMostrar = tvwContIncorrectas.getText().toString() + String.valueOf(contIncorrectas);
+        tvwContIncorrectas.setText(textoAMostrar);
+        textoAMostrar = tvwComboMax.getText().toString() + String.valueOf(comboMax);
+        tvwComboMax.setText(textoAMostrar);
+        tvwContCorrectas.setVisibility(View.VISIBLE);
+        tvwContIncorrectas.setVisibility(View.VISIBLE);
+        tvwComboMax.setVisibility(View.VISIBLE);
+        tvwFin.setVisibility(View.VISIBLE);
+
         tvwTiempo.setVisibility(View.INVISIBLE);
         btnContinuar.setVisibility(View.VISIBLE);
         btnContinuar.setOnClickListener(clickProxActividad);
@@ -203,7 +233,7 @@ public class FormasActivity extends AppCompatActivity {
         @Override
         public void onClick(View v) {
             Intent intent = new Intent(getApplicationContext(), UbicacionActivity.class);
-            intent.putExtra("intPuntaje", puntaje);
+            Usuario.escribirPuntaje(puntaje);
             startActivity(intent);
             finish();
         }

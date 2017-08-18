@@ -66,22 +66,29 @@
 
     <TextView
         android:layout_width="wrap_content"
+        android:background="@drawable/wrap_puntuacion"
+        android:padding="15dp"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textSize="25sp"
         android:textColor="@color/colorTexto"
         android:id="@+id/tvwScore"
+        android:text="0"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@drawable/wrap_puntuacion"
+        android:padding="15dp"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textColor="@color/colorTexto"
+        android:textSize="25sp"
         android:id="@+id/tvwTimer"
+        tools:ignore="RelativeOverlap"
+        android:text="A"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        tools:ignore="RelativeOverlap" />
+        android:layout_alignParentEnd="true" />
 
     <Button
         android:layout_width="wrap_content"
@@ -90,10 +97,11 @@
         android:id="@+id/btnProxActividad"
         android:layout_alignParentBottom="true"
         android:layout_alignEnd="@+id/tvwTimer"
+        android:padding="10dp"
         android:visibility="gone"
         android:background="@color/colorPrimary"
         android:textColor="@color/colorTexto"
-        tools:ignore="HardcodedText"/>
+        android:textSize="25sp"/>
 
     <FrameLayout
         android:layout_width="wrap_content"
@@ -107,5 +115,52 @@
             android:visibility="gone"
             android:background="@null"/>
     </FrameLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:textColor="@color/colorTexto"
+        android:textSize="20sp"
+        android:id="@+id/tvwPaisError"
+        android:layout_above="@+id/tvwScore"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="48dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/correctas"
+        android:id="@+id/tvwContCorrectas"
+        android:layout_marginTop="100dp"
+        android:textColor="@color/colorTexto"
+        android:textSize="20sp"
+        android:visibility="invisible"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/incorrectas"
+        android:id="@+id/tvwContIncorrectas"
+        android:textColor="@color/colorTexto"
+        android:textSize="20sp"
+        android:visibility="invisible"
+        android:layout_below="@+id/tvwContCorrectas"
+        android:layout_alignStart="@+id/tvwContCorrectas"
+        android:layout_marginTop="30dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/comboMax"
+        android:id="@+id/tvwComboMax"
+        android:textColor="@color/colorTexto"
+        android:textSize="20sp"
+        android:visibility="invisible"
+        android:layout_below="@+id/tvwContIncorrectas"
+        android:layout_alignStart="@+id/tvwContCorrectas"
+        android:layout_marginTop="30dp" />
 
 </RelativeLayout>

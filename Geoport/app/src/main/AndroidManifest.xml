@@ -42,8 +42,11 @@
 
         <activity
             android:name=".UbicacionActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_ubicacion"
-            android:screenOrientation="landscape"/>
+            android:screenOrientation="landscape" />
+        <activity android:name=".PuntuacionActivity" />
+        <activity android:name=".RankingActivity"></activity>
     </application>
 
 </manifest>
