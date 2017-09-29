@@ -424,6 +424,7 @@
     <string name="incorrectas">Incorrectas:\u0020</string>
     <string name="correctas">Correctas:\u0020</string>
     <string name="comboMax">Combo máximo:\u0020</string>
+    <string name="gameOver">¡Fin!</string>
     <!--
         <string-array name="paises_array_dificil">
             <item>andorra</item>

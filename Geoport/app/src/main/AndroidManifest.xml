@@ -46,7 +46,8 @@
             android:label="@string/title_activity_ubicacion"
             android:screenOrientation="landscape" />
         <activity android:name=".PuntuacionActivity" />
-        <activity android:name=".RankingActivity"></activity>
+        <activity android:name=".RankingActivity" />
+        <activity android:name=".test"></activity>
     </application>
 
 </manifest>

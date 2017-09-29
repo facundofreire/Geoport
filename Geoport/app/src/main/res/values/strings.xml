@@ -20,6 +20,7 @@
     <string name="correctas">Correct:\u0020</string>
     <string name="incorrectas">Incorrect:\u0020</string>
     <string name="comboMax">Max combo:\u0020</string>
+    <string name="gameOver">Game over!</string>
 
     <string-array name="paises_array">
         <item>Afghanistan</item>

@@ -28,10 +28,10 @@ public class UbicacionActivity extends FragmentActivity implements OnMapReadyCal
 
     private GoogleMap mMap;
 
-    LatLng coordenadaCorrecta = new LatLng(0, 0);
+    LatLng coordenadaCorrecta;
     int puntaje;
     float distanciaUsada = 0;
-    final float limiteDistancia = 40000;
+    final float limiteDistancia = 20000;
     int contIntento = 0;
 
     String[] vecCiudades;
@@ -277,7 +277,7 @@ public class UbicacionActivity extends FragmentActivity implements OnMapReadyCal
     private void nuevaActividad(){
         fin = true;
         btnProxActividad.setVisibility(View.VISIBLE);
-        tvwPais.setText(R.string.fin);
+        tvwPais.setText(R.string.gameOver);
         btnProxActividad.setOnClickListener(clickProxActividad);
     }
 

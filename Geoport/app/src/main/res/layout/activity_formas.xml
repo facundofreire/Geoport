@@ -98,19 +98,30 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true" />
 
+    <ProgressBar
+        android:id="@+id/prbTimer"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:max="500"
+        android:progress="0"
+        android:progressDrawable="@drawable/circular"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true" />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/wrap_puntuacion"
-        android:padding="15dp"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textColor="@color/colorTexto"
         android:textSize="25sp"
         android:id="@+id/tvwTimer"
         tools:ignore="RelativeOverlap"
-        android:text="A"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true" />
+        android:text="30"
+        android:layout_alignStart="@+id/prbTimer"
+        android:layout_alignBottom="@+id/prbTimer"
+        android:paddingStart="22dp"
+        android:paddingBottom="19dp"
+        android:layout_toEndOf="@+id/btn4" />
 
     <TextView
         android:id="@+id/tvwPaisError"

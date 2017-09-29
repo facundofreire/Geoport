@@ -1,5 +1,6 @@
 package com.salmun.dani.geoport;
 
+import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 
@@ -11,9 +12,11 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import java.io.IOException;
@@ -29,6 +32,7 @@ public class BanderasActivity extends AppCompatActivity {
     TextView tvwPais, tvwPaisError, tvwPuntaje, tvwTiempo,
             tvwContCorrectas, tvwContIncorrectas, tvwComboMax;
     ImageView imvCorrecto;
+    ProgressBar prbTimer;
 
     int puntaje, contCombo, contCorrectas, contIncorrectas, comboMax = 0;
 
@@ -65,6 +69,7 @@ public class BanderasActivity extends AppCompatActivity {
         tvwContCorrectas = (TextView) findViewById(R.id.tvwContCorrectas);
         tvwContIncorrectas = (TextView) findViewById(R.id.tvwContIncorrectas);
         tvwComboMax = (TextView) findViewById(R.id.tvwComboMax);
+        prbTimer = (ProgressBar) findViewById(R.id.prbTimer);
 
         vecPaises = getResources().getStringArray(R.array.paises_array);
         vecDificultad = getResources().getIntArray(R.array.dificultadPaises);
@@ -127,17 +132,18 @@ public class BanderasActivity extends AppCompatActivity {
     };
 
     private void empezarTimer(){
-        cTimer = new CountDownTimer(10000, 1000) {
+        final long tiempo = 10000;
+        cTimer = new CountDownTimer(tiempo, 1000) {
             @SuppressLint("SetTextI18n")
             public void onTick(long milisegundos) {
                 if (milisegundos < 10000){
-                    tvwTiempo.setText("0:0" + milisegundos / 1000);
+                    tvwTiempo.setText("0" + String.valueOf(milisegundos / 1000));
                     if (milisegundos < 5000){
                         tvwTiempo.setTextColor(Color.parseColor("#be0000"));
                     }
                 }
                 else{
-                    tvwTiempo.setText("0:" + milisegundos / 1000);
+                    tvwTiempo.setText(String.valueOf(milisegundos / 1000));
                 }
             }
             public void onFinish() {
@@ -145,6 +151,11 @@ public class BanderasActivity extends AppCompatActivity {
             }
         };
         cTimer.start();
+        prbTimer.setRotation(-90);
+        ObjectAnimator animation = ObjectAnimator.ofInt (prbTimer, "progress", 500, 0);
+        animation.setDuration(tiempo);
+        animation.setInterpolator (new DecelerateInterpolator());
+        animation.start ();
     }
 
     private void elegirPais(){
