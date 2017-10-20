@@ -2,12 +2,24 @@ package com.salmun.dani.geoport;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Random;
 
 public class PuntuacionActivity extends AppCompatActivity {
 
@@ -38,9 +50,37 @@ public class PuntuacionActivity extends AppCompatActivity {
     private View.OnClickListener clickContinuar = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
+            FirebaseDatabase database = FirebaseDatabase.getInstance();
+            DatabaseReference myRef = database.getReference();
+            FirebaseAuth mAuth = FirebaseAuth.getInstance();
+            if(mAuth.getCurrentUser() != null && Usuario.leerID() == null){
+                Usuario.escribirID(mAuth.getCurrentUser().getUid());
+            }
+            myRef.child("users").child(Usuario.leerID()).child("puntaje")
+                    .addListenerForSingleValueEvent(postListener);
+
             Intent intent = new Intent(getApplicationContext(), RankingActivity.class);
-            Usuario.escribirPuntaje(puntaje);
             startActivity(intent);
+        }
+    };
+
+    ValueEventListener postListener = new ValueEventListener() {
+        @Override
+        public void onDataChange(DataSnapshot dataSnapshot) {
+            int puntajeDatabase = 0;
+            if (dataSnapshot.exists()){
+                puntajeDatabase = dataSnapshot.getValue(int.class);
+            }
+            if (puntajeDatabase < puntaje){
+                FirebaseDatabase database = FirebaseDatabase.getInstance();
+                DatabaseReference myRef = database.getReference();
+                myRef.child("users").child(Usuario.leerID()).child("puntaje").setValue(puntaje);
+            }
+        }
+
+        @Override
+        public void onCancelled(DatabaseError databaseError) {
+
         }
     };
 

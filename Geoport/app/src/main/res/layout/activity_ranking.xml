@@ -21,35 +21,11 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="10dp"/>
 
-    <Spinner
-        android:layout_width="wrap_content"
-        android:layout_height="40dp"
-        android:id="@+id/spinner"
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="15dp"
         android:layout_below="@+id/textView2"
-        android:layout_alignParentStart="true"
-        android:layout_toStartOf="@+id/btnDia"
-        android:spinnerMode="dropdown"
-        android:entries="@array/tiempoRanking"
-        />
+        android:layout_centerHorizontal="true" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="35dp"
-        android:text="@string/amigosRanking"
-        android:id="@+id/btnDia"
-        android:background="@color/colorPrimaryDark"
-        android:textColor="@color/colorTexto"
-        android:layout_alignTop="@+id/btnTodo"
-        android:layout_alignEnd="@+id/textView2"
-        android:layout_marginEnd="15dp"/>
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="35dp"
-        android:text="@string/todosRanking"
-        android:id="@+id/btnTodo"
-        android:background="@color/colorPrimaryDark"
-        android:textColor="@color/colorTexto"
-        android:layout_alignBottom="@+id/spinner"
-        android:layout_toEndOf="@+id/textView2" />
 </RelativeLayout>

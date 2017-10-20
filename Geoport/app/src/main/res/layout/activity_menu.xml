@@ -17,16 +17,12 @@
         android:background="@color/colorFondo"
         android:contentDescription="Mute"/>
 
-    <ImageButton
-        android:layout_width="74dp"
-        android:layout_height="75dp"
-        android:scaleType="fitCenter"
-        android:id="@+id/btnFacebook"
-        android:layout_gravity="end"
-        android:adjustViewBounds="true"
-        android:contentDescription="Facebook"
-        android:background="@color/colorFondo"
-        android:layout_alignTop="@+id/imvLogo"
+    <com.facebook.login.widget.LoginButton
+        android:id="@+id/btnLogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_alignBottom="@+id/btnMute"
         android:layout_alignParentEnd="true" />
 
     <ImageView

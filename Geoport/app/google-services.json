@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "795878399042-nlael88k8pn6mq5477ph6heqsp6p83lg.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.salmun.dani.geoport",
+            "certificate_hash": "6eeb49b2b19ad2ce4a5b730ee0bebee841c917be"
+          }
+        },
+        {
           "client_id": "795878399042-q5isa6tkusrqfrkh84ofd7ued0fh0603.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -22,6 +30,9 @@
       "api_key": [
         {
           "current_key": "AIzaSyDu01SUjJasfY7o7LXGpdxWE0IK7d6cRFk"
+        },
+        {
+          "current_key": "AIzaSyAMUq15ovOdkOrL9sHGLZnuZFoMht_pL3M"
         }
       ],
       "services": {
@@ -29,8 +40,13 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "795878399042-q5isa6tkusrqfrkh84ofd7ued0fh0603.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         },
         "ads_service": {
           "status": 2

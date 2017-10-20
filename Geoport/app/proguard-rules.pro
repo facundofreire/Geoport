@@ -8,7 +8,12 @@
 #   http://developer.android.com/guide/developing/tools/proguard.html
 
 # Add any project specific keep options here:
+-keepattributes Signature
+-keepattributes *Annotation*
 
+-keepclassmembers class com.salmun.dani.geoport.models.** {
+  *;
+}
 # If your project uses WebView with JS, uncomment the following
 # and specify the fully qualified class name to the JavaScript interface
 # class:
