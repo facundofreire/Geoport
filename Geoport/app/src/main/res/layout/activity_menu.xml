@@ -9,20 +9,13 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:background="@color/colorFondo"
     tools:context="com.salmun.dani.geoport.MenuActivity">
-    <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/btnMute"
-        android:src="@drawable/nota_musical"
-        android:background="@color/colorFondo"
-        android:contentDescription="Mute"/>
+
 
     <com.facebook.login.widget.LoginButton
         android:id="@+id/btnLogin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_alignBottom="@+id/btnMute"
         android:layout_alignParentEnd="true" />
 
     <ImageView

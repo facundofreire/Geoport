@@ -1,7 +1,9 @@
 package com.salmun.dani.geoport;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -10,6 +12,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.facebook.AccessToken;
+import com.facebook.AccessTokenTracker;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
@@ -25,9 +28,11 @@ import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -39,6 +44,9 @@ public class MenuActivity extends AppCompatActivity {
 
     CallbackManager callbackManager;
     private FirebaseAuth mAuth;
+    private AccessTokenTracker fbTracker;
+    private SharedPreferences sharedPreferences;
+    private final FirebaseDatabase database = FirebaseDatabase.getInstance();
 
 
     @Override
@@ -47,7 +55,24 @@ public class MenuActivity extends AppCompatActivity {
         FacebookSdk.sdkInitialize(getApplicationContext());
         setContentView(R.layout.activity_menu);
         mAuth = FirebaseAuth.getInstance();
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        if (mAuth.getCurrentUser() != null) {
+            handleFacebookAccessToken(AccessToken.getCurrentAccessToken());
+        }
+
         ObtenerReferenciasYSetearListeners();
+        fbTracker = new AccessTokenTracker() {
+            @Override
+            protected void onCurrentAccessTokenChanged(AccessToken accessToken, AccessToken accessToken2) {
+                if (accessToken2 == null) {
+                    mAuth.signOut();
+                    Usuario.escribirID("");
+                    Usuario.escribirNombre("");
+                    Log.e("Auth", "Sign out");
+                }
+            }
+        };
+        fbTracker.startTracking();
     }
 
     private void ObtenerReferenciasYSetearListeners() {
@@ -62,6 +87,7 @@ public class MenuActivity extends AppCompatActivity {
         @Override
         public void onClick(View view) {
             loginButton.setReadPermissions("user_friends");
+            loginButton.setReadPermissions("public_profile");
             callbackManager = CallbackManager.Factory.create();
             loginButton.registerCallback(callbackManager, callback);
         }
@@ -81,16 +107,36 @@ public class MenuActivity extends AppCompatActivity {
                             try {
                                 JSONArray json = response.getJSONObject().getJSONArray("data");
                                 if (json.length()>0) {
+                                    String listaAmigos = "";
                                     for (int i = 0; i < json.length(); i++) {
                                         JSONObject amigo = json.getJSONObject(i);
-                                        Usuario.anadirAmigo(amigo.getString("name"));
-                                        Log.e("JSON", amigo.getString("id"));
+                                        listaAmigos += amigo.getString("id") + "°";
+                                        Log.e("JSON", amigo.getString("name"));
                                     }
+                                    listaAmigos = listaAmigos.substring(0, listaAmigos.length() - 2);
+                                    SharedPreferences.Editor editor=sharedPreferences.edit();
+                                    editor.putString("listaAmigos", listaAmigos);
+                                    editor.apply();
                                 }else{
                                     Log.e("JSON", "No tenes amigos xd");
                                 }
                             }catch (JSONException e){
                                 Log.e("JSON", "Error al parsear json");
+                            }
+                        }
+                    }
+            ).executeAsync();
+            new GraphRequest(
+                    AccessToken.getCurrentAccessToken(),
+                    "/me",
+                    null,
+                    HttpMethod.GET,
+                    new GraphRequest.Callback() {
+                        public void onCompleted(GraphResponse response) {
+                            try {
+                                Usuario.escribirNombre(response.getJSONObject().getString("name"));
+                            }catch (JSONException e){
+                                Log.e("Menu", e.getLocalizedMessage());
                             }
                         }
                     }
@@ -121,10 +167,11 @@ public class MenuActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             if (mAuth.getCurrentUser() != null) {
-                                Usuario.escribirID(mAuth.getCurrentUser().getUid());
-                                FirebaseDatabase database = FirebaseDatabase.getInstance();
-                                DatabaseReference myRef = database.getReference();
-                                myRef.child("users").child(Usuario.leerID()).child("fbid").setValue(token.getUserId());
+                                Usuario.escribirID(token.getUserId());
+                                DatabaseReference myRef = database.getReference("users/" + Usuario.leerID());
+
+                                myRef.child("puntaje").addListenerForSingleValueEvent(puntajeListener);
+                                myRef.child("nombre").addListenerForSingleValueEvent(nombreListener);
                             }
                         } else {
                             Toast.makeText(getApplicationContext(), "Authentication failed.",
@@ -134,8 +181,44 @@ public class MenuActivity extends AppCompatActivity {
                 });
     }
 
+    private ValueEventListener puntajeListener = new ValueEventListener() {
+        @Override
+        public void onDataChange(DataSnapshot dataSnapshot) {
+            if (!dataSnapshot.exists()){
+                DatabaseReference myRef = database.getReference("users/"
+                        + Usuario.leerID() + "/puntaje");
+                myRef.setValue(0);
+            }
+        }
+
+        @Override
+        public void onCancelled(DatabaseError databaseError) {
+
+        }
+    };
+
+    private ValueEventListener nombreListener = new ValueEventListener() {
+        @Override
+        public void onDataChange(DataSnapshot dataSnapshot) {
+            if (dataSnapshot.exists()){
+                Usuario.escribirNombre(dataSnapshot.getValue(String.class));
+            }else{
+                DatabaseReference myRef = database.getReference("users/"
+                        + Usuario.leerID() + "/nombre");
+                myRef.setValue(Usuario.leerNombre());
+            }
+            Log.e("Menu", "Usuario main: " + Usuario.leerNombre());
+        }
+
+        @Override
+        public void onCancelled(DatabaseError databaseError) {
+
+        }
+    };
+
     private View.OnClickListener btnPlayClick = new View.OnClickListener() {
         public void onClick(View v) {
+            fbTracker.stopTracking();
             Intent intent = new Intent(getApplicationContext(), BanderasActivity.class);
             startActivity(intent);
             finish();

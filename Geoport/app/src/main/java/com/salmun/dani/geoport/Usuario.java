@@ -4,13 +4,11 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-/**
- * Created by 45017521 on 4/8/2017.
- */
+
 public class Usuario {
     static private int puntaje;
-    static private String id;
-    static private ArrayList<String> lstAmigos = new ArrayList<>();
+    static private String id = "";
+    static private String nombre = "";
 
     static int leerPuntaje(){
         return puntaje;
@@ -28,7 +26,11 @@ public class Usuario {
         id = nuevaID;
     }
 
-    static void anadirAmigo(String idAmigo){
-        lstAmigos.add(idAmigo);
+    static String leerNombre(){
+        return nombre;
+    }
+
+    static void escribirNombre(String nombreNuevo){
+        nombre = nombreNuevo;
     }
 }

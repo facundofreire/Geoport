@@ -31,7 +31,7 @@ public class UbicacionActivity extends FragmentActivity implements OnMapReadyCal
     LatLng coordenadaCorrecta;
     int puntaje;
     float distanciaUsada = 0;
-    final float limiteDistancia = 20000;
+    final float limiteDistancia = 1000;
     int contIntento = 0;
 
     String[] vecCiudades;

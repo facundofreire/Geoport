@@ -17,10 +17,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
-
 public class PuntuacionActivity extends AppCompatActivity {
 
     int puntaje;
@@ -50,31 +46,27 @@ public class PuntuacionActivity extends AppCompatActivity {
     private View.OnClickListener clickContinuar = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            FirebaseDatabase database = FirebaseDatabase.getInstance();
-            DatabaseReference myRef = database.getReference();
             FirebaseAuth mAuth = FirebaseAuth.getInstance();
-            if(mAuth.getCurrentUser() != null && Usuario.leerID() == null){
-                Usuario.escribirID(mAuth.getCurrentUser().getUid());
+            if (mAuth != null) {
+                final FirebaseDatabase database = FirebaseDatabase.getInstance();
+                DatabaseReference myRef = database.getReference("users/" + Usuario.leerID());
+                myRef.child("puntaje").addListenerForSingleValueEvent(postListener);
+                Intent intent = new Intent(getApplicationContext(), RankingActivity.class);
+                startActivity(intent);
             }
-            myRef.child("users").child(Usuario.leerID()).child("puntaje")
-                    .addListenerForSingleValueEvent(postListener);
-
-            Intent intent = new Intent(getApplicationContext(), RankingActivity.class);
-            startActivity(intent);
         }
     };
 
     ValueEventListener postListener = new ValueEventListener() {
         @Override
         public void onDataChange(DataSnapshot dataSnapshot) {
-            int puntajeDatabase = 0;
-            if (dataSnapshot.exists()){
-                puntajeDatabase = dataSnapshot.getValue(int.class);
-            }
-            if (puntajeDatabase < puntaje){
-                FirebaseDatabase database = FirebaseDatabase.getInstance();
-                DatabaseReference myRef = database.getReference();
-                myRef.child("users").child(Usuario.leerID()).child("puntaje").setValue(puntaje);
+            if (dataSnapshot.exists()) {
+                int puntajeDatabase = dataSnapshot.getValue(int.class);
+                if (puntajeDatabase < puntaje) {
+                    FirebaseDatabase database = FirebaseDatabase.getInstance();
+                    DatabaseReference myRef = database.getReference("users/" + Usuario.leerID());
+                    myRef.child("puntaje").setValue(puntaje);
+                }
             }
         }
 
