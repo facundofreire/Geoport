@@ -56,11 +56,14 @@ public class MenuActivity extends AppCompatActivity {
         setContentView(R.layout.activity_menu);
         mAuth = FirebaseAuth.getInstance();
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        if (mAuth.getCurrentUser() != null) {
+        if (mAuth.getCurrentUser() != null && AccessToken.getCurrentAccessToken() != null) {
             handleFacebookAccessToken(AccessToken.getCurrentAccessToken());
         }
 
         ObtenerReferenciasYSetearListeners();
+
+        Usuario.setGuardoScore(false);
+
         fbTracker = new AccessTokenTracker() {
             @Override
             protected void onCurrentAccessTokenChanged(AccessToken accessToken, AccessToken accessToken2) {
@@ -68,6 +71,9 @@ public class MenuActivity extends AppCompatActivity {
                     mAuth.signOut();
                     Usuario.escribirID("");
                     Usuario.escribirNombre("");
+                    SharedPreferences.Editor editor=sharedPreferences.edit();
+                    editor.remove("listaAmigos");
+                    editor.apply();
                     Log.e("Auth", "Sign out");
                 }
             }

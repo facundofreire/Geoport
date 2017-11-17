@@ -17,39 +17,21 @@
         android:text="@string/puntajeFinal"
         android:id="@+id/textView"
         android:textColor="@color/colorTexto"
+        android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_alignParentTop="true" />
+        android:layout_marginTop="31dp" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="New Text"
         android:id="@+id/tvwPuntajeFinal"
-        android:layout_below="@+id/textView"
         android:textColor="@color/colorTexto"
         android:textSize="40sp"
         android:textStyle="bold"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="25dp" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="@string/rango"
-        android:id="@+id/textView3"
-        android:textColor="@color/colorTexto"
-        android:layout_marginTop="25dp"
-        android:layout_below="@+id/tvwPuntajeFinal"
+        android:layout_marginTop="74dp"
+        android:layout_below="@+id/textView"
         android:layout_centerHorizontal="true" />
-
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/imageView"
-        android:layout_below="@+id/textView3"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="25dp" />
 
     <Button
         android:layout_width="150dp"
@@ -60,8 +42,7 @@
         android:background="@color/colorPrimaryDark"
         android:textColor="@color/colorTexto"
         android:layout_marginBottom="56dp"
-        android:layout_alignParentBottom="true"
-        android:layout_toStartOf="@+id/textView3" />
+        android:layout_alignParentBottom="true" />
 
     <Button
         android:layout_width="150dp"
@@ -71,7 +52,8 @@
         android:textSize="20sp"
         android:background="@color/colorPrimaryDark"
         android:textColor="@color/colorTexto"
-        android:layout_alignTop="@+id/btnMenu"
-        android:layout_toEndOf="@+id/textView3" />
+        android:layout_alignEnd="@+id/btnMenu"
+        android:layout_alignBottom="@+id/btnMenu"
+        android:layout_alignParentEnd="true" />
 
 </RelativeLayout>

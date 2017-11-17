@@ -79,7 +79,11 @@ public class PuntuacionActivity extends AppCompatActivity {
     private View.OnClickListener clickMenu = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            llamarDialog();
+            if(Usuario.isGuardoScore()) {
+                nuevaActividad();
+            }else{
+                llamarDialog();
+            }
         }
     };
 
@@ -92,9 +96,7 @@ public class PuntuacionActivity extends AppCompatActivity {
                 R.string.si,
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        Intent intent = new Intent(getApplicationContext(), MenuActivity.class);
-                        startActivity(intent);
-                        finish();
+                        nuevaActividad();
                         dialog.cancel();
                     }
                 });
@@ -109,5 +111,11 @@ public class PuntuacionActivity extends AppCompatActivity {
 
         AlertDialog alert11 = builder1.create();
         alert11.show();
+    }
+
+    private void nuevaActividad(){
+        Intent intent = new Intent(getApplicationContext(), MenuActivity.class);
+        startActivity(intent);
+        finish();
     }
 }

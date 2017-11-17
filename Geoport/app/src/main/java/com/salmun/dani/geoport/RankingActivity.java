@@ -32,6 +32,7 @@ public class RankingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ranking);
         obtenerReferencias();
+        Usuario.setGuardoScore(true);
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         llenarLista();
     }
@@ -56,7 +57,6 @@ public class RankingActivity extends AppCompatActivity {
             }
         }else{
             DatabaseReference mDatabase = database.getReference("users");
-            mDatabase.child(Usuario.leerID()).addListenerForSingleValueEvent(scoreListener);
 
             String listaAmigos = sharedPreferences.getString("listaAmigos", "");
             if (!listaAmigos.isEmpty()){
@@ -67,11 +67,10 @@ public class RankingActivity extends AppCompatActivity {
 
                     Log.e(TAG, "Id amigo: " + id);
                 }
-
             }else{
-                Log.e(TAG, "No hay amigos");
+                cantAmigos = 0;
             }
-
+            mDatabase.child(Usuario.leerID()).addListenerForSingleValueEvent(scoreListener);
         }
     }
 

@@ -131,7 +131,7 @@ public class BanderasActivity extends AppCompatActivity {
     };
 
     private void empezarTimer(){
-        final long tiempo = 1000;
+        final long tiempo = 30000;
         cTimer = new CountDownTimer(tiempo, 1000) {
             @SuppressLint("SetTextI18n")
             public void onTick(long milisegundos) {

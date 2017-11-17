@@ -48,6 +48,8 @@ public class FormasActivity extends AppCompatActivity {
         setContentView(R.layout.activity_formas);
         puntaje = Usuario.leerPuntaje();
         obtenerReferenciasYSetearListeners();
+        String strMostrarComboYPuntaje = "x" + String.valueOf(contCombo) + "\n" + String.valueOf(puntaje);
+        tvwPuntaje.setText(strMostrarComboYPuntaje);
         elegirPais();
         empezarTimer();
     }
@@ -94,7 +96,7 @@ public class FormasActivity extends AppCompatActivity {
     }
 
     private void empezarTimer(){
-        final long tiempo = 1000;
+        final long tiempo = 30000;
         cTimer = new CountDownTimer(tiempo, 1000) {
             @SuppressLint("SetTextI18n")
             public void onTick(long milisegundos) {
@@ -218,6 +220,8 @@ public class FormasActivity extends AppCompatActivity {
             comboMax = contCombo;
         }
 
+        tvwTiempo.setVisibility(View.INVISIBLE);
+        tvwPaisError.setVisibility(View.INVISIBLE);
         imvPais.setVisibility(View.INVISIBLE);
         for (int idBtn:lstIdBtn){
             Button btnTemp = (Button)findViewById(idBtn);
@@ -236,7 +240,6 @@ public class FormasActivity extends AppCompatActivity {
         tvwComboMax.setVisibility(View.VISIBLE);
         tvwFin.setVisibility(View.VISIBLE);
 
-        tvwTiempo.setVisibility(View.INVISIBLE);
         btnContinuar.setVisibility(View.VISIBLE);
         btnContinuar.setOnClickListener(clickProxActividad);
     }
