@@ -27,6 +27,7 @@ public class PuntuacionActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        LocaleHelper.setLocale(getBaseContext(), LocaleHelper.getLanguage(getApplicationContext()));
         setContentView(R.layout.activity_puntuacion);
         puntaje = Usuario.leerPuntaje();
         obtenerReferenciasYSetearListeners();

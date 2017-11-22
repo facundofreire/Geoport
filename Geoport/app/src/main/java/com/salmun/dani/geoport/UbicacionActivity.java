@@ -51,6 +51,7 @@ public class UbicacionActivity extends FragmentActivity implements OnMapReadyCal
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        LocaleHelper.setLocale(getBaseContext(), LocaleHelper.getLanguage(getApplicationContext()));
         setContentView(R.layout.activity_ubicacion);
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
@@ -64,7 +65,7 @@ public class UbicacionActivity extends FragmentActivity implements OnMapReadyCal
         } else {
             puntaje = Usuario.leerPuntaje();
         }
-        String puntajeAMostrar = String.valueOf(puntaje) + "\nLimite: " + String.valueOf(Math.round(distanciaUsada))
+        String puntajeAMostrar = String.valueOf(puntaje) + "\n" + getString(R.string.limite) + String.valueOf(Math.round(distanciaUsada))
                 + "/" + String.valueOf(Math.round(limiteDistancia)) + "km";
         tvwPuntaje.setText(puntajeAMostrar);
         elegirCiudad();
@@ -217,7 +218,7 @@ public class UbicacionActivity extends FragmentActivity implements OnMapReadyCal
             elegirCiudad();
         }
 
-        String puntajeAMostrar = String.valueOf(puntaje) + "\nLimite: " + String.valueOf(Math.round(distanciaUsada))
+        String puntajeAMostrar = String.valueOf(puntaje) + "\n" + getString(R.string.limite) + String.valueOf(Math.round(distanciaUsada))
                 + "/" + String.valueOf(Math.round(limiteDistancia)) + "km";
         tvwPuntaje.setText(puntajeAMostrar);
     }

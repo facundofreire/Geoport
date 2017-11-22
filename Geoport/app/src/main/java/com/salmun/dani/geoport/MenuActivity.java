@@ -1,5 +1,7 @@
 package com.salmun.dani.geoport;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -39,7 +41,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class MenuActivity extends AppCompatActivity {
-    Button btnPlay;
+    Button btnPlay, btnRanking, btnIdioma;
     LoginButton loginButton;
 
     CallbackManager callbackManager;
@@ -62,6 +64,8 @@ public class MenuActivity extends AppCompatActivity {
 
         ObtenerReferenciasYSetearListeners();
 
+        btnIdioma.setText(getString(R.string.idioma));
+
         Usuario.setGuardoScore(false);
 
         fbTracker = new AccessTokenTracker() {
@@ -82,10 +86,14 @@ public class MenuActivity extends AppCompatActivity {
     }
 
     private void ObtenerReferenciasYSetearListeners() {
+        btnIdioma = (Button) findViewById(R.id.btnIdioma);
+        btnRanking = (Button) findViewById(R.id.btnRanking);
         btnPlay = (Button) findViewById(R.id.btnPlay);
         loginButton = (LoginButton) findViewById(R.id.btnLogin);
 
         btnPlay.setOnClickListener(btnPlayClick);
+        btnIdioma.setOnClickListener(clickIdioma);
+        btnRanking.setOnClickListener(clickRanking);
         loginButton.setOnClickListener(clickFacebook);
     }
 
@@ -228,6 +236,26 @@ public class MenuActivity extends AppCompatActivity {
             Intent intent = new Intent(getApplicationContext(), BanderasActivity.class);
             startActivity(intent);
             finish();
+        }
+    };
+
+    private View.OnClickListener clickIdioma = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            if (LocaleHelper.getLanguage(getApplicationContext()).equals("en")){
+                LocaleHelper.setLocale(getBaseContext(), "es");
+            }else{
+                LocaleHelper.setLocale(getBaseContext(), "en");
+            }
+            recreate();
+        }
+    };
+
+    private View.OnClickListener clickRanking = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            Intent intent = new Intent(getApplicationContext(), RankingActivity.class);
+            startActivity(intent);
         }
     };
 }

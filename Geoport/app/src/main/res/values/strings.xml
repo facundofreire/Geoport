@@ -23,6 +23,8 @@
     <string name="incorrectas">Incorrect:\u0020</string>
     <string name="comboMax">Max combo:\u0020</string>
     <string name="gameOver">Game over!</string>
+    <string name="limite">Limit:\u0020</string>
+    <string name="loginRanking">Log in to Facebook in the main menu to check your friends\' scores!</string>
 
     <string-array name="paises_array">
         <item>Afghanistan</item>
@@ -417,13 +419,6 @@
         <item>Harare</item>
     </string-array>
 
-    <string-array name="tiempoRanking">
-        <item>Day</item>
-        <item>Week</item>
-        <item>Month</item>
-        <item>Year</item>
-        <item>All</item>
-    </string-array>
     <!--
         <string-array name="paises_array_dificil">
             <item>andorra</item>

@@ -412,19 +412,14 @@
         <item>Harare</item>
     </string-array>
 
-    <string-array name="tiempoRanking">
-        <item>Día</item>
-        <item>Semana</item>
-        <item>Mes</item>
-        <item>Año</item>
-        <item>Todos</item>
-    </string-array>
     <string name="paisCorrecto">País correcto:\u0020</string>
     <string name="paisElegido">País elegido:\u0020</string>
     <string name="incorrectas">Incorrectas:\u0020</string>
     <string name="correctas">Correctas:\u0020</string>
     <string name="comboMax">Combo máximo:\u0020</string>
     <string name="gameOver">¡Fin!</string>
+    <string name="limite">"Limite: "</string>
+    <string name="loginRanking">¡Logeate a facebook en el menu principal para ver los puntajes de tus amigos!</string>
     <!--
         <string-array name="paises_array_dificil">
             <item>andorra</item>
